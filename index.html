@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Renata · Inglés y español</title>
+<meta name="apple-mobile-web-app-title" content="Renata">
+<meta name="application-name" content="Renata">
+<style>
+:root{--bg:#fff8ec;--ink:#2b2d42;--soft:#8d8fa3;--ok:#22a06b;--bad:#e5484d;--card:#fff;--pri:#5b6cff;--sun:#ffb703;--mint:#c8f5e1;--pink:#ffd6e0;--sky:#d6ecff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:"Arial Rounded MT Bold","Chalkboard SE","Comic Sans MS","Trebuchet MS",system-ui,sans-serif;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
+button{font-family:inherit;color:inherit;border:none;cursor:pointer;touch-action:manipulation}
+#app{max-width:900px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding:12px 14px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:52px}
+.pill{background:#fff;border-radius:999px;padding:8px 14px;font-size:20px;box-shadow:0 2px 0 #0001}
+.icon{background:#fff;border-radius:16px;width:52px;height:52px;font-size:26px;box-shadow:0 3px 0 #0002}
+.lock{opacity:.55;font-size:20px;width:44px;height:44px}
+.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.mascot{font-size:110px;line-height:1;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px)}}
+h1{font-size:30px;margin:0}
+h2{font-size:24px;margin:0}
+.sub{font-size:19px;color:var(--soft);margin:0}
+.big{background:var(--pri);color:#fff;font-size:30px;padding:20px 40px;border-radius:28px;box-shadow:0 6px 0 #3a48c8;min-width:240px}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #3a48c8}
+.btn{background:#fff;font-size:22px;padding:14px 22px;border-radius:20px;box-shadow:0 4px 0 #0002}
+.btn.green{background:var(--ok);color:#fff;box-shadow:0 4px 0 #157a50}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.dot{width:16px;height:16px;border-radius:50%;background:#e4e1d8}
+.dot.on{background:var(--sun)}.dot.cur{background:var(--pri);transform:scale(1.25)}
+.chip{display:inline-block;padding:4px 12px;border-radius:999px;font-size:16px;background:var(--sky)}
+.prompt{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.hear{background:var(--sun);width:72px;height:72px;border-radius:50%;font-size:36px;box-shadow:0 5px 0 #c98f00}
+.hint{background:#fff3c4;width:56px;height:56px;border-radius:50%;font-size:28px;box-shadow:0 4px 0 #0002}
+.visual{font-size:120px;line-height:1.05}
+.word{font-size:64px;letter-spacing:2px}
+.sentence{font-size:40px}
+.opts{display:grid;gap:14px;width:100%;max-width:760px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.opt{background:var(--card);border-radius:26px;min-height:150px;font-size:76px;box-shadow:0 6px 0 #0002;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px;line-height:1.05;transition:transform .1s}
+.opt.txt{font-size:56px}.opt.small{font-size:34px}
+.opt.sel{outline:6px solid var(--pri)}
+.opt.ok{background:var(--mint);outline:6px solid var(--ok)}
+.opt.no{animation:shake .4s}
+.opt.dim{opacity:.35}
+@keyframes shake{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.group{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;font-size:34px}
+.fb{position:fixed;inset:auto 0 0 0;padding:18px;text-align:center;font-size:28px;color:#fff;transform:translateY(110%);transition:transform .25s;z-index:20}
+.fb.show{transform:none}.fb.good{background:var(--ok)}.fb.try{background:#f08c00}.fb.look{background:var(--pri)}
+.tiles{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.tile{width:74px;height:84px;border-radius:18px;background:#fff;font-size:46px;box-shadow:0 5px 0 #0002}
+.slot{width:74px;height:84px;border-radius:18px;border:4px dashed #cfc9bb;font-size:46px;display:flex;align-items:center;justify-content:center;background:#fffdf8}
+.slot.fill{border-style:solid;border-color:var(--ok);background:var(--mint)}
+canvas.trace{background:#fff;border-radius:24px;box-shadow:0 5px 0 #0002;touch-action:none;width:100%;max-width:700px}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.lesson{background:#fff;border-radius:26px;padding:18px;box-shadow:0 5px 0 #0001;width:100%;max-width:760px;text-align:left}
+.lesson h3{margin:0 0 8px;font-size:22px}
+.lesson p{margin:6px 0;font-size:19px;line-height:1.35}
+.cards{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px}
+.wcard{background:var(--sky);border-radius:20px;padding:10px 14px;min-width:120px;text-align:center}
+.wcard .e{font-size:54px}.wcard .w{font-size:24px}.wcard .s{font-size:15px;color:var(--soft)}
+.album{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:6px;width:100%;max-width:760px;font-size:38px;text-align:center}
+.confetti{position:fixed;top:-20px;font-size:28px;animation:fall 2.6s linear forwards;z-index:30;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.panel{background:#fff;border-radius:20px;padding:16px;width:100%;max-width:760px;text-align:left;font-family:system-ui,sans-serif;user-select:text;-webkit-user-select:text}
+.panel h3{margin:4px 0 10px}.panel p,.panel li{font-size:15px;line-height:1.45}
+.bar{height:12px;background:#eee;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+table.sk{width:100%;border-collapse:collapse;font-size:15px}table.sk td{padding:5px 4px;border-bottom:1px solid #eee}
+.keypad{display:grid;grid-template-columns:repeat(3,72px);gap:10px;justify-content:center}
+.keypad button{height:64px;font-size:28px;border-radius:16px;background:#fff;box-shadow:0 3px 0 #0002}
+.modal{position:fixed;inset:0;background:#0006;display:flex;align-items:center;justify-content:center;z-index:40}
+.modal>div{background:#fff;border-radius:20px;padding:20px;max-width:420px;text-align:center;font-family:system-ui,sans-serif}
+.timer{font-size:16px;color:var(--soft)}
+@media (max-width:520px){.visual{font-size:96px}.opt{min-height:118px;font-size:60px}.opt.txt{font-size:42px}.word{font-size:50px}.sentence{font-size:30px}.opts{grid-template-columns:repeat(auto-fit,minmax(100px,1fr))}.tile,.slot{width:58px;height:68px;font-size:36px}.group{font-size:26px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="fb" class="fb"></div>
+<script>
+"use strict";
+/* ============================================================
+   Renata — app bilingüe (aprende inglés / learn Spanish).
+   Sin anuncios, sin cuentas, sin datos personales.
+   El progreso se guarda solo en este dispositivo.
+   ============================================================ */
+
+// ---------- Utilidades ----------
+function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rngFrom(seed){let a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pick(arr,r){return arr[Math.floor(r()*arr.length)]}
+const $=s=>document.querySelector(s);
+function el(tag,attrs,...kids){const e=document.createElement(tag);if(attrs)for(const k in attrs){if(k==='class')e.className=attrs[k];else if(k.startsWith('on'))e.addEventListener(k.slice(2),attrs[k]);else if(k==='html')e.innerHTML=attrs[k];else e.setAttribute(k,attrs[k])}for(const k of kids){if(k==null)continue;e.append(k.nodeType?k:document.createTextNode(k))}return e}
+function todayStr(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function base(ch){return ch==='ñ'?'ñ':ch.normalize('NFD').replace(/[̀-ͯ]/g,'')}
+function splitEmoji(s){try{if(window.Intl&&Intl.Segmenter)return[...new Intl.Segmenter().segment(s)].map(x=>x.segment)}catch(e){}
+  return s.match(/\p{RI}\p{RI}|\p{Extended_Pictographic}️?(‍\p{Extended_Pictographic}️?)*/gu)||[]}
+
+// ---------- Modo de idioma ----------
+// MODE 'en' = aprende inglés (instrucciones en español) · 'es' = learns Spanish (instructions in English)
+const MODEKEY='renata-mode';
+let MODE=null;try{MODE=localStorage.getItem(MODEKEY)}catch(e){}
+if(MODE!=='en'&&MODE!=='es')MODE=null;
+let T='en',N='es';
+function setLangs(){T=MODE==='es'?'es':'en';N=T==='en'?'es':'en';document.documentElement.lang=N}
+setLangs();
+const I=(es,en)=>N==='es'?es:en;                 // texto en la lengua materna
+const tg=t=>[t,T], nt=t=>[t,N];                  // partes habladas
+const ES=t=>[t,'es'],EN=t=>[t,'en'];
+const TNAME=()=>I('inglés','Spanish');
+
+// ---------- Vocabulario (emoji | inglés | español | tema | marcas) ----------
+// marcas: n = sin artículo (inglés), p = plural, a = artículo "a" forzado, x = no usar en "¿Es esto...?"
+const THEMES=['La escuela','La familia','Los colores','Los números','Los animales','La comida','El cuerpo','La ropa','El clima','La casa','Transporte','La naturaleza','La comunidad','Sentimientos','Acciones','Juguetes','Formas','Animales del mar y la selva'];
+const VRAW=`📕|book|libro|0
+✏️|pencil|lápiz|0
+🎒|backpack|mochila|0
+🏫|school|escuela|0
+👩‍🏫|teacher|maestra|0
+📏|ruler|regla|0
+🖍️|crayon|crayón|0
+🚌|bus|autobús|0
+💻|computer|computadora|0
+✂️|scissors|tijeras|0|p
+🖌️|paintbrush|pincel|0
+📓|notebook|cuaderno|0
+🎨|paint|pintura|0|n
+👩|mom|mamá|1|x
+👨|dad|papá|1|x
+👶|baby|bebé|1
+👵|grandma|abuela|1|x
+👴|grandpa|abuelo|1|x
+👦|boy|niño|1
+👧|girl|niña|1
+👪|family|familia|1
+🏠|house|casa|1
+🔴|red|rojo|2|n
+🔵|blue|azul|2|n
+🟡|yellow|amarillo|2|n
+🟢|green|verde|2|n
+🟠|orange|anaranjado|2|n
+🟣|purple|morado|2|n
+⚫|black|negro|2|n
+⚪|white|blanco|2|n
+🟤|brown|café|2|n
+1️⃣|one|uno|3|n
+2️⃣|two|dos|3|n
+3️⃣|three|tres|3|n
+4️⃣|four|cuatro|3|n
+5️⃣|five|cinco|3|n
+6️⃣|six|seis|3|n
+7️⃣|seven|siete|3|n
+8️⃣|eight|ocho|3|n
+9️⃣|nine|nueve|3|n
+🔟|ten|diez|3|n
+🐱|cat|gato|4
+🐶|dog|perro|4
+🐟|fish|pez|4
+🐦|bird|pájaro|4
+🐮|cow|vaca|4
+🐴|horse|caballo|4
+🐷|pig|cerdo|4
+🦆|duck|pato|4
+🐻|bear|oso|4
+🐰|rabbit|conejo|4
+🦁|lion|león|4
+🐸|frog|rana|4
+🦋|butterfly|mariposa|4
+🐢|turtle|tortuga|4
+🐭|mouse|ratón|4
+🐵|monkey|mono|4
+🐘|elephant|elefante|4
+🦉|owl|búho|4
+🐜|ant|hormiga|4
+🐝|bee|abeja|4
+🐍|snake|serpiente|4
+🦒|giraffe|jirafa|4
+🐔|chicken|gallina|4
+🐑|sheep|oveja|4
+🐙|octopus|pulpo|4
+🍎|apple|manzana|5
+🍌|banana|plátano|5
+🍇|grapes|uvas|5|p
+🍊|orange|naranja|5
+🍓|strawberry|fresa|5
+🍉|watermelon|sandía|5
+🥛|milk|leche|5|n
+🍞|bread|pan|5|n
+🥚|egg|huevo|5
+🧀|cheese|queso|5|n
+💧|water|agua|5|n
+🌮|taco|taco|5
+🍕|pizza|pizza|5
+🍪|cookie|galleta|5
+🍦|ice cream|helado|5
+🥕|carrot|zanahoria|5
+🌽|corn|maíz|5|n
+🍋|lemon|limón|5
+🥑|avocado|aguacate|5
+🍐|pear|pera|5
+🍑|peach|durazno|5
+🍍|pineapple|piña|5
+🥦|broccoli|brócoli|5|n
+🧁|cupcake|panquecito|5
+🍰|cake|pastel|5
+🥪|sandwich|sándwich|5
+👁️|eye|ojo|6
+👃|nose|nariz|6
+👄|mouth|boca|6
+👂|ear|oreja|6
+✋|hand|mano|6
+🦶|foot|pie|6
+🦵|leg|pierna|6
+🦷|tooth|diente|6
+💪|arm|brazo|6
+👅|tongue|lengua|6
+👕|shirt|camiseta|7
+👖|pants|pantalones|7|p
+👗|dress|vestido|7
+👟|shoe|zapato|7
+👒|hat|sombrero|7
+🧢|cap|gorra|7
+🧦|socks|calcetines|7|p
+🧥|coat|abrigo|7
+🧣|scarf|bufanda|7
+🧤|gloves|guantes|7|p
+👓|glasses|lentes|7|p
+🩳|shorts|shorts|7|p
+👜|bag|bolsa|7
+☀️|sun|sol|8
+🌙|moon|luna|8
+⭐|star|estrella|8
+☁️|cloud|nube|8
+🌧️|rain|lluvia|8|n
+❄️|snow|nieve|8|n
+💨|wind|viento|8|n
+🌈|rainbow|arcoíris|8
+⚡|lightning|rayo|8|n
+☂️|umbrella|paraguas|8
+🌪️|tornado|tornado|8
+🛏️|bed|cama|9
+🪑|chair|silla|9
+🚪|door|puerta|9
+🪟|window|ventana|9
+🛋️|couch|sofá|9
+🛁|bathtub|bañera|9
+🔑|key|llave|9
+💡|light bulb|foco|9
+⏰|clock|reloj|9
+📺|TV|televisión|9|a
+🥄|spoon|cuchara|9
+🥣|bowl|tazón|9
+🧹|broom|escoba|9
+🪥|toothbrush|cepillo de dientes|9
+🧼|soap|jabón|9|n
+🍽️|plate|plato|9
+🚗|car|carro|10
+🚂|train|tren|10
+✈️|airplane|avión|10
+⛵|boat|barco|10
+🚲|bike|bicicleta|10
+🚚|truck|camión|10
+🚀|rocket|cohete|10
+🚁|helicopter|helicóptero|10
+🏍️|motorcycle|moto|10
+🚑|ambulance|ambulancia|10
+🚒|fire truck|camión de bomberos|10
+🚕|taxi|taxi|10
+🛴|scooter|patinete|10
+🌳|tree|árbol|11
+🌸|flower|flor|11
+🍃|leaf|hoja|11
+⛰️|mountain|montaña|11
+🌊|wave|ola|11
+🏖️|beach|playa|11
+🪨|rock|roca|11
+🔥|fire|fuego|11|n
+🌱|plant|planta|11
+🌵|cactus|cactus|11
+🍄|mushroom|hongo|11
+🐚|shell|concha|11
+🌻|sunflower|girasol|11
+🌎|Earth|Tierra|11|n
+👩‍⚕️|doctor|doctora|12
+🧑‍🚒|firefighter|bombero|12
+👮|police officer|policía|12
+🧑‍🍳|cook|cocinero|12
+🧑‍🌾|farmer|granjero|12
+🏥|hospital|hospital|12
+🏞️|park|parque|12
+🏪|store|tienda|12
+📚|books|libros|12|p
+📬|mailbox|buzón|12
+🧑‍🚀|astronaut|astronauta|12
+🧑‍🎨|artist|artista|12
+😀|happy|feliz|13|nx
+😢|sad|triste|13|nx
+😠|angry|enojado|13|nx
+😨|scared|asustado|13|nx
+🥱|tired|cansado|13|nx
+😮|surprised|sorprendido|13|nx
+😌|calm|tranquilo|13|nx
+🤒|sick|enfermo|13|nx
+🏃|run|correr|14|nx
+📖|read|leer|14|nx
+✍️|write|escribir|14|nx
+🎤|sing|cantar|14|nx
+💃|dance|bailar|14|nx
+🏊|swim|nadar|14|nx
+🚶|walk|caminar|14|nx
+👏|clap|aplaudir|14|nx
+👋|wave hello|saludar|14|nx
+🛌|sleep|dormir|14|nx
+🧗|climb|escalar|14|nx
+⚽|ball|pelota|15
+🧸|teddy bear|osito de peluche|15
+🎈|balloon|globo|15
+🪁|kite|papalote|15
+🧱|blocks|bloques|15|p
+🧩|puzzle|rompecabezas|15
+🥁|drum|tambor|15
+🎸|guitar|guitarra|15
+🎲|dice|dados|15|p
+🪀|yo-yo|yoyo|15
+🎁|gift|regalo|15
+🪆|doll|muñeca|15
+🎺|trumpet|trompeta|15
+🎹|piano|piano|15
+🔔|bell|campana|15
+⭕|circle|círculo|16
+🟦|square|cuadrado|16
+🔺|triangle|triángulo|16
+❤️|heart|corazón|16
+🔷|diamond|rombo|16
+➡️|arrow|flecha|16
+🐳|whale|ballena|17
+🦈|shark|tiburón|17
+🐬|dolphin|delfín|17
+🦀|crab|cangrejo|17
+🐧|penguin|pingüino|17
+🐯|tiger|tigre|17
+🦓|zebra|cebra|17
+🐊|crocodile|cocodrilo|17
+🦔|hedgehog|erizo|17
+🐌|snail|caracol|17
+🐞|ladybug|mariquita|17
+🦊|fox|zorro|17
+🐺|wolf|lobo|17
+🦄|unicorn|unicornio|17|a`;
+const VOCAB=VRAW.split('\n').map(l=>{const [e,en,es,t,f]=l.split('|');return{e,en,es,t:+t,f:f||''}});
+
+// ---- Género en español ----
+const GEX={serpiente:'f',mano:'f',moto:'f',flor:'f',nariz:'f',leche:'f',nube:'f',nieve:'f',llave:'f',papá:'m',sofá:'m',policía:'m',astronauta:'m',artista:'m',
+  tazón:'m',avión:'m',camión:'m',ratón:'m',jabón:'m',limón:'m',león:'m',tiburón:'m',buzón:'m',corazón:'m',crayón:'m',agua:'f',televisión:'f',Tierra:'f'};
+
+// ---- Palabras de distintos países hispanos (variante con artículo, país) ----
+const CTRY={MX:['México','Mexico'],ES:['España','Spain'],AR:['Argentina','Argentina'],CL:['Chile','Chile'],PR:['Puerto Rico','Puerto Rico'],DO:['República Dominicana','Dominican Republic'],CU:['Cuba','Cuba'],CO:['Colombia','Colombia'],VE:['Venezuela','Venezuela'],PE:['Perú','Peru'],GT:['Guatemala','Guatemala']};
+const REG={
+  carro:[['el coche','ES'],['el auto','AR CL']],
+  papalote:[['la cometa','ES'],['el barrilete','AR GT'],['la chiringa','PR'],['el volantín','CL']],
+  'plátano':[['la banana','AR'],['el guineo','PR DO']],
+  fresa:[['la frutilla','AR CL']],
+  durazno:[['el melocotón','ES']],
+  aguacate:[['la palta','AR CL PE']],
+  'maíz':[['el elote','MX'],['el choclo','AR CL PE']],
+  lentes:[['las gafas','ES'],['los anteojos','AR']],
+  'autobús':[['el camión','MX'],['la guagua','CU PR DO'],['el colectivo','AR']],
+  computadora:[['el ordenador','ES']],
+  pastel:[['la torta','AR'],['la tarta','ES']],
+  cerdo:[['el puerco','MX'],['el chancho','AR CL']],
+  foco:[['la bombilla','ES'],['el bombillo','CO VE']],
+  'crayón':[['la crayola','MX'],['la cera','ES']],
+  calcetines:[['las medias','AR CO']],
+  mariquita:[['la catarina','MX'],['la vaquita de San Antonio','AR'],['la chinita','CL']],
+  'búho':[['el tecolote','MX']],
+  hongo:[['la seta','ES']],
+  cuaderno:[['la libreta','ES CU']],
+  globo:[['la bomba','CO']],
+  'sándwich':[['el bocadillo','ES']],
+  patinete:[['el monopatín','AR'],['el patín del diablo','MX']],
+  'sandía':[['la patilla','VE CO']],
+  'piña':[['el ananá','AR']],
+  'tazón':[['el bol','ES']],
+  camiseta:[['la playera','MX'],['la remera','AR'],['la polera','CL']],
+  zapato:[['los tenis','MX'],['las zapatillas','ES AR']],
+  mochila:[['el bulto','PR']],
+  'bebé':[['la guagua','CL']],
+  naranja:[['la china','PR']]
+};
+function regNames(codes){return codes.split(' ').map(c=>CTRY[c][N==='es'?0:1]).join(', ')}
+function variants(v){return REG[v.es]||[]}
+function gES(v){const w=v.es.split(' ')[0];if(v.f.includes('p'))return /as$/.test(w)?'fp':'mp';if(GEX[w])return GEX[w];
+  if(/(ción|sión)$/.test(w))return'f';if(/[aá]$/.test(w))return'f';return'm'}
+function noArtES(v){return v.t===2||v.t===3||v.t===13||v.t===14}
+function defES(v){if(v.es==='agua')return'el';return{m:'el',f:'la',mp:'los',fp:'las'}[gES(v)]}
+function indES(v){return{m:'un',f:'una',mp:'unos',fp:'unas'}[gES(v)]}
+function artEN(v){if(v.f.includes('n')||v.f.includes('p'))return'';if(v.f.includes('a'))return'a';return /^[aeiouAEIOU]/.test(v.en)?'an':'a'}
+function TW(v){return v[T]}                       // palabra en el idioma meta
+function NW(v){return v[N]}                       // palabra en la lengua materna
+function withArt(v){ // palabra meta con artículo indefinido, si aplica
+  if(T==='en'){const a=artEN(v);return a?a+' '+v.en:v.en}
+  if(noArtES(v)||v.f.includes('n'))return v.es;return indES(v)+' '+v.es}
+function sayWord(v){ // forma para practicar oralmente
+  if(T==='es'&&!noArtES(v)&&!v.f.includes('n'))return defES(v)+' '+v.es;return TW(v)}
+function isQ(v){ // pregunta de sí/no
+  if(T==='en'){if(v.t===3)return'Is this the number '+v.en+'?';if(v.t===2)return'Is this '+v.en+'?';if(v.f.includes('p'))return'Are these '+v.en+'?';return'Is this '+withArt(v)+'?'}
+  if(v.t===3)return'¿Es el número '+v.es+'?';if(v.f.includes('p'))return'¿Son '+v.es+'?';return'¿Es '+withArt(v)+'?'}
+
+// Contables: emoji | inglés sing | inglés pl | español sing | español pl | género | tema
+const CRAW=`🐱|cat|cats|gato|gatos|m|4
+🐶|dog|dogs|perro|perros|m|4
+🐦|bird|birds|pájaro|pájaros|m|4
+🦆|duck|ducks|pato|patos|m|4
+🐰|rabbit|rabbits|conejo|conejos|m|4
+🐸|frog|frogs|rana|ranas|f|4
+🦋|butterfly|butterflies|mariposa|mariposas|f|4
+🐢|turtle|turtles|tortuga|tortugas|f|4
+🐝|bee|bees|abeja|abejas|f|4
+🍎|apple|apples|manzana|manzanas|f|5
+🍌|banana|bananas|plátano|plátanos|m|5
+🍊|orange|oranges|naranja|naranjas|f|5
+🍓|strawberry|strawberries|fresa|fresas|f|5
+🥚|egg|eggs|huevo|huevos|m|5
+🍪|cookie|cookies|galleta|galletas|f|5
+🥕|carrot|carrots|zanahoria|zanahorias|f|5
+🍋|lemon|lemons|limón|limones|m|5
+🍐|pear|pears|pera|peras|f|5
+⭐|star|stars|estrella|estrellas|f|8
+🌸|flower|flowers|flor|flores|f|11
+🌳|tree|trees|árbol|árboles|m|11
+🚗|car|cars|carro|carros|m|10
+⚽|ball|balls|pelota|pelotas|f|15
+🎈|balloon|balloons|globo|globos|m|15
+📕|book|books|libro|libros|m|0
+✏️|pencil|pencils|lápiz|lápices|m|0
+🖍️|crayon|crayons|crayón|crayones|m|0
+👟|shoe|shoes|zapato|zapatos|m|7
+🔑|key|keys|llave|llaves|f|9
+🍄|mushroom|mushrooms|hongo|hongos|m|11
+🐚|shell|shells|concha|conchas|f|11
+❤️|heart|hearts|corazón|corazones|m|16
+🔔|bell|bells|campana|campanas|f|15
+🎁|gift|gifts|regalo|regalos|m|15
+🧁|cupcake|cupcakes|panquecito|panquecitos|m|5
+🍃|leaf|leaves|hoja|hojas|f|11
+🐞|ladybug|ladybugs|mariquita|mariquitas|f|17`;
+const COUNT=CRAW.split('\n').map(l=>{const [e,s,p,ss,sp,g,t]=l.split('|');return{e,s,p,ss,sp,g,t:+t}});
+const NUMW=['zero','one','two','three','four','five','six','seven','eight','nine','ten'];
+const NUMES=['cero','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez'];
+const cS=c=>T==='en'?c.s:c.ss, cP=c=>T==='en'?c.p:c.sp;
+function countSentence(c,n,digits){
+  if(T==='en'){const num=digits?String(n):NUMW[n];return'I see '+num+' '+(n===1?c.s:c.p)+'.'}
+  if(n===1)return'Veo '+(digits?'1':(c.g==='f'?'una':'un'))+' '+c.ss+'.';return'Veo '+(digits?n:NUMES[n])+' '+c.sp+'.'}
+function bigSmall(c,big){if(T==='en')return'the '+(big?'big':'small')+' '+c.s;
+  const art=c.g==='f'?'la':'el';return art+' '+c.ss+' '+(big?'grande':(c.g==='f'?'pequeña':'pequeño'))}
+function thisThese(c,pl){if(T==='en')return pl?'These are '+c.p+'.':'This is a'+(/^[aeiou]/.test(c.s)?'n ':' ')+c.s+'.';
+  const f=c.g==='f';return pl?(f?'Estas son ':'Estos son ')+c.sp+'.':(f?'Esta es una ':'Este es un ')+c.ss+'.'}
+function iLike(c){return T==='en'?'I like '+c.p+'.':'Me gustan '+(c.g==='f'?'las ':'los ')+c.sp+'.'}
+
+// Colores y formas
+const COLS=['red','orange','yellow','green','blue','purple','black','white','brown'];
+const COLES={red:'rojo',orange:'anaranjado',yellow:'amarillo',green:'verde',blue:'azul',purple:'morado',black:'negro',white:'blanco',brown:'café'};
+const SHAPES={circle:'🔴🟠🟡🟢🔵🟣⚫⚪🟤',square:'🟥🟧🟨🟩🟦🟪⬛⬜🟫',heart:'❤️🧡💛💚💙💜🖤🤍🤎'};
+const SHAPEES={circle:'círculo',square:'cuadrado',heart:'corazón'};
+function shapeEmoji(shape,col){return splitEmoji(SHAPES[shape])[COLS.indexOf(col)]}
+function colorPhrase(sh,col){return T==='en'?'a '+col+' '+sh:'un '+SHAPEES[sh]+' '+COLES[col]}
+function colorWrong(sh,col){return T==='en'?'a '+sh+' '+col:'un '+COLES[col]+' '+SHAPEES[sh]}
+
+// Personas (he/she · él/ella)
+const PEOPLE=[['👦','He','a boy','Él','un niño'],['👧','She','a girl','Ella','una niña'],['👨','He','a man','Él','un hombre'],['👩','She','a woman','Ella','una mujer'],['👴','He','my grandpa','Él','mi abuelo'],['👵','She','my grandma','Ella','mi abuela'],['🤴','He','a prince','Él','un príncipe'],['👸','She','a princess','Ella','una princesa'],['👨','He','my dad','Él','mi papá'],['👩','She','my mom','Ella','mi mamá'],['👦','He','my brother','Él','mi hermano'],['👧','She','my sister','Ella','mi hermana']];
+function personPron(p){return T==='en'?p[1]:p[3]}
+function personRest(p){return T==='en'?'is '+p[2]+'.':'es '+p[4]+'.'}
+
+// Frases útiles (emoji | inglés | español)
+const PHRASES=`👋|Hello!|¡Hola!
+🌅|Good morning!|¡Buenos días!
+🙏|Thank you!|¡Gracias!
+🙂|Please.|Por favor.
+👋|Goodbye!|¡Adiós!
+❓|How are you?|¿Cómo estás?
+😀|I am fine.|Estoy bien.
+😀|I am happy.|Estoy feliz.
+⚽|Can I play?|¿Puedo jugar?
+🚻|May I go to the bathroom?|¿Puedo ir al baño?
+🆘|I need help.|Necesito ayuda.
+🙇|Excuse me.|Con permiso.
+😔|I'm sorry.|Lo siento.
+🎉|Let's play!|¡Vamos a jugar!
+🌙|Good night!|¡Buenas noches!
+📅|See you tomorrow!|¡Hasta mañana!
+👍|Yes, please.|Sí, por favor.
+👎|No, thank you.|No, gracias.
+💖|I like it.|Me gusta.
+👀|Look!|¡Mira!
+☝️|It's my turn.|Me toca a mí.
+👉|Your turn.|Te toca a ti.
+💧|Can I have water, please?|¿Me das agua, por favor?
+✋|I have a question.|Tengo una pregunta.
+🤝|Let's be friends!|¡Seamos amigos!
+🧹|I can help.|Yo puedo ayudar.
+📖|I like to read.|Me gusta leer.
+🎨|I like to draw.|Me gusta dibujar.
+🎵|I like to sing.|Me gusta cantar.
+🙌|I did it!|¡Lo logré!`;
+const PHR=PHRASES.split('\n').map(l=>{const [e,en,es]=l.split('|');return{e,en,es}});
+
+// Cultura en Estados Unidos: emoji | dato ES | palabra EN | distractores | mes | dato EN | palabra ES
+const CULT=[
+['🇺🇸','La bandera de Estados Unidos tiene 50 estrellas y 13 rayas.','the flag',['🇲🇽','🇨🇦'],0,'The flag of the United States has 50 stars and 13 stripes.','la bandera'],
+['🗽','La Estatua de la Libertad está en Nueva York.','the Statue of Liberty','🗼🏰',0,'The Statue of Liberty is in New York.','la Estatua de la Libertad'],
+['🦅','El águila calva es un símbolo de Estados Unidos.','the eagle','🦜🐧',0,'The bald eagle is a symbol of the United States.','el águila'],
+['🦬','El bisonte es el mamífero nacional de Estados Unidos.','the bison','🐫🦒',0,'The bison is the national mammal of the United States.','el bisonte'],
+['🔔','La Campana de la Libertad está en Filadelfia.','the Liberty Bell','🎺🥁',0,'The Liberty Bell is in Philadelphia.','la campana'],
+['🏛️','El presidente trabaja en la Casa Blanca, en Washington, D.C.','the White House','🏰⛺',2,'The president works in the White House, in Washington, D.C.','la Casa Blanca'],
+['💵','El dinero de Estados Unidos es el dólar.','dollar','🍪🔑',0,'The money of the United States is the dollar.','el dólar'],
+['⭐','La bandera de Texas tiene una sola estrella.','star','🌙☀️',0,'The Texas flag has just one star.','la estrella'],
+['🗺️','Estados Unidos tiene 50 estados. Está entre Canadá y México.','map','🧩📺',0,'The United States has 50 states. It is between Canada and Mexico.','el mapa'],
+['👋','En inglés decimos hello. En español decimos hola.','hello','🛌🍕',0,'In Spanish we say hola. In English we say hello.','hola'],
+['🚑','En una emergencia, un adulto llama al 9 1 1.','ambulance','🚲🛴',0,'In an emergency, a grown-up calls 9 1 1.','la ambulancia'],
+['🚌','El autobús escolar en Estados Unidos es amarillo.','school bus','🚗🚂',8,'The school bus in the United States is yellow.','el autobús escolar'],
+['🎒','En agosto empieza la escuela. Los niños llevan su mochila.','backpack','👜🧳',8,'School starts in August. Children bring their backpacks.','la mochila'],
+['✋','En la escuela levantamos la mano para hablar.','raise your hand','👟🦶',8,'At school we raise our hand to talk.','levanta la mano'],
+['🥪','En la escuela, muchos niños comen el almuerzo en la cafetería.','lunch','🛏️🧹',0,'At school, many children eat lunch in the cafeteria.','el almuerzo'],
+['🛠️','En septiembre, el Día del Trabajo honra a los trabajadores.','tools','🎈🍰',9,'In September, Labor Day honors workers.','las herramientas'],
+['🪅','Del 15 de septiembre al 15 de octubre celebramos el Mes de la Herencia Hispana, con música, comida y tradiciones, ¡como la piñata!','piñata','🎸🧸',9,'From September 15 to October 15 we celebrate Hispanic Heritage Month, with music, food and traditions, like the piñata!','la piñata'],
+['🍂','En otoño, las hojas cambian de color y caen.','leaves','🌸❄️',10,'In the fall, leaves change color and fall down.','las hojas'],
+['🎃','El 31 de octubre es Halloween. Los niños se disfrazan y decoran calabazas.','pumpkin','🍎🍉',10,'October 31 is Halloween. Children wear costumes and decorate pumpkins.','la calabaza'],
+['🌼','El Día de Muertos, el 1 y 2 de noviembre, muchas familias recuerdan a sus seres queridos con flores de cempasúchil.','flowers','🌵🍄',11,'On the Day of the Dead, November 1 and 2, many families remember their loved ones with marigold flowers.','las flores'],
+['🎖️','El 11 de noviembre, el Día de los Veteranos, damos las gracias a los veteranos.','medal','🎁🔑',11,'On November 11, Veterans Day, we thank our veterans.','la medalla'],
+['🦃','En noviembre, muchas familias celebran el Día de Acción de Gracias, Thanksgiving, con una cena.','turkey','🐔🦆',11,'In November, many families celebrate Thanksgiving with a big dinner.','el pavo'],
+['🥧','En Thanksgiving, muchas familias comen pastel de calabaza.','pie','🍕🌮',11,'On Thanksgiving, many families eat pumpkin pie.','el pastel'],
+['🎈','En Nueva York hay un desfile de Thanksgiving con globos gigantes.','balloons','🪁⚽',11,'New York has a Thanksgiving parade with giant balloons.','los globos'],
+['🪔','Algunas familias celebran Diwali, la fiesta de las luces.','lights','🥄🧦',11,'Some families celebrate Diwali, the festival of lights.','las luces'],
+['🎄','En diciembre, muchas familias decoran un árbol de Navidad.','Christmas tree','🌵🌴',12,'In December, many families decorate a Christmas tree.','el árbol de Navidad'],
+['🕎','Algunas familias celebran Janucá y encienden las velas de la menorá.','candles','🥕🖍️',12,'Some families celebrate Hanukkah and light the candles of the menorah.','las velas'],
+['🫔','En diciembre, muchas familias hispanas preparan tamales.','tamales','🍔🍕',12,'In December, many Hispanic families make tamales.','los tamales'],
+['⛄','En invierno hace frío y en muchos estados nieva.','snowman','☀️🌊',1,'In winter it is cold, and in many states it snows.','el muñeco de nieve'],
+['🎊','El 1 de enero celebramos el Año Nuevo.','Happy New Year','🎃🦃',1,'On January 1 we celebrate the New Year.','Feliz Año Nuevo'],
+['🕊️','En enero recordamos a Martin Luther King Jr., quien trabajó por la paz y la igualdad.','peace','🔥⚡',1,'In January we remember Martin Luther King Jr., who worked for peace and equality.','la paz'],
+['🧧','Muchas familias asiático-americanas celebran el Año Nuevo Lunar con sobres rojos.','red envelope','💌📕',2,'Many Asian American families celebrate the Lunar New Year with red envelopes.','el sobre rojo'],
+['💌','El 14 de febrero, en la escuela, los niños se dan tarjetas de amistad.','card','📏🍞',2,'On February 14, children at school give each other friendship cards.','la tarjeta'],
+['🍀','El 17 de marzo es el Día de San Patricio y muchas personas se visten de verde.','clover','🌹🍁',3,'March 17 is Saint Patrick\'s Day, and many people wear green.','el trébol'],
+['🌷','En primavera crecen muchas flores, como los tulipanes.','tulip','🍁❄️',3,'In spring many flowers grow, like tulips.','el tulipán'],
+['🥚','En primavera, algunas familias buscan huevos de colores.','eggs','🍪⚽',4,'In spring, some families look for colorful eggs.','los huevos'],
+['🌎','El 22 de abril es el Día de la Tierra. ¡Cuidamos nuestro planeta!','Earth','🌙⭐',4,'April 22 is Earth Day. We take care of our planet!','la Tierra'],
+['💃','El 5 de mayo, en Estados Unidos, muchas personas celebran la cultura mexicana con música y baile.','dance','📖🛌',5,'On May 5, many people in the United States celebrate Mexican culture with music and dance.','el baile'],
+['💐','En Estados Unidos, el Día de las Madres es el segundo domingo de mayo.','Mom','🪑🚗',5,'In the United States, Mother\'s Day is the second Sunday in May.','mamá'],
+['👩‍🏫','En mayo damos las gracias a los maestros. Algunos niños les regalan una manzana.','teacher','🧑‍🍳🧑‍🌾',5,'In May we thank our teachers. Some children give them an apple.','la maestra'],
+['👔','En junio celebramos el Día del Padre.','Dad','👒🧦',6,'In June we celebrate Father\'s Day.','papá'],
+['🏖️','En verano no hay escuela. Muchos niños van a la playa o al parque.','beach','⛄🏫',6,'In summer there is no school. Many children go to the beach or the park.','la playa'],
+['🎆','El 4 de julio es el Día de la Independencia, con fuegos artificiales.','fireworks','🌧️🌈',7,'July 4 is Independence Day, with fireworks.','los fuegos artificiales'],
+['🌭','En el verano, muchas familias hacen picnic y comen hot dogs.','hot dog','🍜🍣',7,'In summer, many families have picnics and eat hot dogs.','el perro caliente'],
+['🎂','En un cumpleaños cantamos Happy Birthday y soplamos las velas.','birthday cake','🍕🥪',0,'At a birthday we sing and blow out the candles. In Spanish we sing Feliz cumpleaños.','el pastel de cumpleaños'],
+['⚾','El béisbol es un deporte muy popular en Estados Unidos.','baseball','⚽🏀',0,'Baseball is a very popular sport in the United States.','el béisbol'],
+['🏈','El fútbol americano se juega con una pelota ovalada.','football','🏀🎾',0,'Football is played with an oval ball.','el fútbol americano'],
+['📚','En la biblioteca pública puedes pedir libros prestados gratis.','books','🍕🧦',0,'At the public library you can borrow books for free.','los libros'],
+['🌉','El puente Golden Gate está en San Francisco, California.','bridge','🗼⛰️',0,'The Golden Gate Bridge is in San Francisco, California.','el puente'],
+['🏜️','El Gran Cañón está en Arizona.','canyon','🏖️🏙️',0,'The Grand Canyon is in Arizona.','el cañón'],
+['🍔','La hamburguesa es una comida muy popular en Estados Unidos.','hamburger','🍣🥟',0,'The hamburger is a very popular food in the United States.','la hamburguesa'],
+['🤠','En Texas hay rodeos con vaqueros y caballos.','cowboy','👮🧑‍🍳',0,'In Texas there are rodeos with cowboys and horses.','el vaquero']
+].map(([e,es,w,d,m,en,wes])=>({e,es,w,d:Array.isArray(d)?d:splitEmoji(d),m,en,wes}));
+const cFact=c=>N==='es'?c.es:c.en, cWord=c=>T==='en'?c.w:c.wes;
+
+// Alfabetos
+const LETTERS_EN='abcdefghijklmnopqrstuvwxyz'.split('');
+const LETTERS_ES='abcdefghijklmnñopqrstuvwxyz'.split('');
+const LORDER_EN='amstpfincdugbehrlkjwvyxqoz'.split('');
+const LORDER_ES='aeioumpsltndcbfrgjvñyzhqkwx'.split('');
+const LNAME_ES={a:'a',b:'be',c:'ce',d:'de',e:'e',f:'efe',g:'ge',h:'hache',i:'i',j:'jota',k:'ka',l:'ele',m:'eme',n:'ene','ñ':'eñe',o:'o',p:'pe',q:'cu',r:'erre',s:'ese',t:'te',u:'u',v:'uve',w:'uve doble',x:'equis',y:'ye',z:'zeta'};
+let LETTERS=LETTERS_EN,LORDER=LORDER_EN;
+function setAlpha(){LETTERS=T==='en'?LETTERS_EN:LETTERS_ES;LORDER=T==='en'?LORDER_EN:LORDER_ES}
+setAlpha();
+function letterSay(l){return T==='en'?l.toUpperCase():LNAME_ES[l]}
+function theLetter(l){return T==='en'?'The letter '+l.toUpperCase()+'.':'La letra '+LNAME_ES[l]+'.'}
+function first(w){return base(w[0].toLowerCase())}
+
+const SKILLS_ES={alfa:'Alfabeto',vocab:'Vocabulario',escuchar:'Escuchar',gram:'Gramática',lectura:'Lectura',escritura:'Escritura',hablar:'Hablar',cultura:'Cultura'};
+const SKILLS_EN={alfa:'Alphabet',vocab:'Vocabulary',escuchar:'Listening',gram:'Grammar',lectura:'Reading',escritura:'Writing',hablar:'Speaking',cultura:'Culture'};
+const SKILLS=new Proxy({},{get:(o,k)=>(N==='es'?SKILLS_ES:SKILLS_EN)[k],ownKeys:()=>Object.keys(SKILLS_ES),getOwnPropertyDescriptor:()=>({enumerable:true,configurable:true})});
+const SKILLICON={alfa:'🔤',vocab:'🧺',escuchar:'👂',gram:'🧩',lectura:'📖',escritura:'✍️',hablar:'🗣️',cultura:'🇺🇸'};
+
+// ---------- Banco de ejercicios ----------
+function lpos(l){return Math.max(0,LORDER.indexOf(l))/(LORDER.length-1)}
+function simpleWord(w){return T==='en'?/^[a-z]+$/.test(w):/^[a-zñáéíóúü]+$/.test(w)}
+function buildPools(){
+  const P={alfa:[],vocab:[],escuchar:[],gram:[],lectura:[],escritura:[],hablar:[],cultura:[]};
+  const add=(skill,type,id,stage,data)=>P[skill].push({skill,type,key:skill+':'+type+':'+id,stage,...data});
+  const TT=THEMES.length;
+  for(const l of LETTERS){
+    add('alfa','oyeMay',l,lpos(l)*.8,{l});add('alfa','oyeMin',l,lpos(l)*.8+.1,{l});
+    add('alfa','mayMin',l,lpos(l)*.8+.12,{l});add('alfa','minMay',l,lpos(l)*.8+.15,{l});
+    if(l!==LETTERS[0]&&l!==LETTERS[LETTERS.length-1])add('alfa','sigue',l,.35+lpos(l)*.6,{l});
+  }
+  for(const v of VOCAB){if([2,3,13,14].includes(v.t))continue;const l=first(TW(v));if(!LETTERS.includes(l))continue;add('alfa','empieza',TW(v),.2+lpos(l)*.5+v.t/TT*.3,{v,l})}
+  for(const v of VOCAB){add('vocab','oyeToca',v.en,v.t/TT,{v});add('vocab','comoSeDice',v.en,v.t/TT+.08,{v});if(!v.f.includes('x'))add('vocab','siNo',v.en,v.t/TT+.05,{v})}
+  if(T==='es')for(const v of VOCAB)variants(v).forEach(([w,c],i)=>add('vocab','region',v.en+i,.45+v.t/TT*.5,{v,w,c}));
+  for(const c of COUNT)for(let n=1;n<=10;n++)add('escuchar','contar',c.s+n,(n/10)*.6+c.t/TT*.4,{c,n});
+  for(const sh of Object.keys(SHAPES))for(const col of COLS)add('escuchar','colorForma',sh+col,.15+COLS.indexOf(col)/9*.5,{sh,col});
+  for(const c of COUNT){add('escuchar','grande',c.s+'big',.3+c.t/TT*.5,{c,big:true});add('escuchar','grande',c.s+'small',.32+c.t/TT*.5,{c,big:false})}
+  for(const v of VOCAB){
+    if(T==='en'){if(artEN(v)&&v.t!==12)add('gram','aAn',v.en,.15+v.t/TT*.6+(artEN(v)==='an'?.05:0),{v})}
+    else if(!noArtES(v)&&!v.f.includes('p')&&v.es!=='agua'&&!v.es.includes(' ')&&!['policía','astronauta','artista'].includes(v.es))add('gram','aAn',v.en,.15+v.t/TT*.6,{v,def:hashStr(v.es)%2===0})}
+  for(const c of COUNT){add('gram','plural',c.s+'1',.2+c.t/TT*.6,{c,pl:false});add('gram','plural',c.s+'2',.22+c.t/TT*.6,{c,pl:true});
+    add('gram','esteEstos',c.s+'1',.4+c.t/TT*.5,{c,pl:false});add('gram','esteEstos',c.s+'2',.42+c.t/TT*.5,{c,pl:true})}
+  PEOPLE.forEach((p,i)=>add('gram','heShe',''+i,.3+i/12*.5,{p}));
+  for(const sh of Object.keys(SHAPES))for(const col of COLS)add('gram','orden',sh+col,.55+COLS.indexOf(col)/9*.4,{sh,col});
+  for(const v of VOCAB){if(v.t===14)continue;add('lectura','leePalabra',v.en,(TW(v).length<=3?0:.25)+v.t/TT*.6,{v})}
+  for(const c of COUNT)for(let n=1;n<=6;n++)add('lectura','leeOracion',c.s+n,.4+n/6*.3+c.t/TT*.3,{c,n});
+  for(const sh of Object.keys(SHAPES))for(const col of COLS)add('lectura','leeColor',sh+col,.3+COLS.indexOf(col)/9*.5,{sh,col});
+  for(const l of LETTERS){add('escritura','trazaMay',l,lpos(l)*.7,{l});add('escritura','trazaMin',l,lpos(l)*.7+.08,{l})}
+  for(const v of VOCAB){const w=TW(v);if(!simpleWord(w))continue;
+    if(w.length<=4)add('escritura','trazaPalabra',v.en,.35+v.t/TT*.5,{v});
+    if(w.length<=5&&w.length>=3)add('escritura','fichas',v.en,.3+w.length/5*.3+v.t/TT*.4,{v});
+    if(v.t!==2&&v.t!==3&&LETTERS.includes(first(w)))add('escritura','primeraLetra',v.en,.2+v.t/TT*.7,{v});
+  }
+  for(const v of VOCAB)add('hablar','repite',v.en,v.t/TT,{v});
+  PHR.forEach((p,i)=>add('hablar','frase',''+i,.1+i/PHR.length*.8,{p}));
+  for(const c of COUNT)add('hablar','meGusta',c.s,.5+c.t/TT*.4,{c});
+  CULT.forEach((c,i)=>{add('cultura','dato',''+i,0,{c});add('cultura','siNoV',''+i,0,{c,ok:true});add('cultura','siNoF',''+i,0,{c,ok:false});add('cultura','diloC',''+i,0,{c})});
+  return P;
+}
+
+// ---------- Plan de 365 días sin repetir ----------
+const DAYS=365;
+function dayLayout(d){return['alfa','vocab','escuchar','gram','lectura','escritura','hablar',d%2===0?'cultura':'vocab']}
+function buildPlan(startStr){
+  const P=buildPools();const used=new Set();
+  const slots={};for(let d=0;d<DAYS;d++)dayLayout(d).forEach((s,i)=>{(slots[s]=slots[s]||[]).push([d,i])});
+  const plan=Array.from({length:DAYS},()=>new Array(8));const fills=[];
+  for(const skill of Object.keys(slots)){
+    if(skill==='cultura')continue;
+    const r=rngFrom(hashStr('orden-'+T+'-'+skill));
+    const pool=P[skill].map(x=>({x,s:x.stage+r()*.35})).sort((a,b)=>a.s-b.s).map(o=>o.x);
+    const Nn=slots[skill].length,L=pool.length;let prev=-1;
+    slots[skill].forEach(([d,i],k)=>{const p=Math.floor(k*L/Nn);if(p!==prev&&!used.has(pool[p].key)){plan[d][i]=pool[p];used.add(pool[p].key);prev=p}else fills.push([d,i,skill])});
+  }
+  const start=new Date(startStr+'T12:00:00');const cpool=P.cultura;const order=['dato','siNoV','diloC','siNoF'];
+  for(const [d,i] of slots.cultura){
+    const m=new Date(start.getTime()+d*86400000).getMonth()+1;let cand=null;
+    for(const ty of order){cand=cpool.find(x=>!used.has(x.key)&&x.type===ty&&x.c.m===m);if(cand)break}
+    if(!cand)for(const ty of order){cand=cpool.find(x=>!used.has(x.key)&&x.type===ty&&x.c.m===0);if(cand)break}
+    if(cand){plan[d][i]=cand;used.add(cand.key)}else fills.push([d,i,'cultura'])
+  }
+  fills.sort((a,b)=>a[0]-b[0]);
+  const spare=[];for(const s of ['vocab','lectura','escritura','hablar','escuchar','alfa','gram'])for(const x of P[s])if(!used.has(x.key))spare.push(x);
+  spare.sort((a,b)=>a.stage-b.stage);
+  for(const [d,i] of fills){const x=spare.find(z=>!used.has(z.key)&&!plan[d].some(y=>y&&y.skill===z.skill&&y.type===z.type));const y=x||spare.find(z=>!used.has(z.key));plan[d][i]=y;used.add(y.key)}
+  return plan;
+}
+
+// ---------- Estado (por modo, solo en este dispositivo) ----------
+const STOREBASE='renata-v2-';
+let S=null,PLAN=null;
+function storeKey(){return STOREBASE+MODE}
+function load(){S=null;try{S=JSON.parse(localStorage.getItem(storeKey()))}catch(e){}
+  if(!S&&MODE==='en'){try{const old=JSON.parse(localStorage.getItem('aprendo-ingles-v1'));if(old&&old.start)S=old}catch(e){}}
+  if(!S||!S.start)S={start:todayStr(),day:0,idx:0,lastDone:'',stars:0,stickers:[],skills:{},rate:0.85,minutes:10,unlock:false,voiceRec:true}}
+function save(){try{localStorage.setItem(storeKey(),JSON.stringify(S))}catch(e){}}
+function setMode(m){MODE=m;try{localStorage.setItem(MODEKEY,m)}catch(e){}setLangs();setAlpha();load();PLAN=buildPlan(S.start);applyTitle()}
+function applyTitle(){document.title=MODE==='es'?'Renata · Learn Spanish':'Renata · Aprendo inglés'}
+const DEFAULT_S={rate:0.85,voiceRec:true};
+if(MODE){setMode(MODE)}else{S=Object.assign({},DEFAULT_S)}
+
+// ---------- Voz ----------
+let voices=[];
+function loadVoices(){try{voices=speechSynthesis.getVoices()||[]}catch(e){voices=[]}}
+try{loadVoices();speechSynthesis.onvoiceschanged=loadVoices}catch(e){}
+function langOf(v){return (v.lang||'').replace('_','-').toLowerCase()}
+function voicesFor(lang){const pref=lang==='en'?['en-us','en-gb','en']:['es-us','es-mx','es-419','es'];
+  const out=[];for(const p of pref)for(const v of voices)if(langOf(v).startsWith(p)&&!out.includes(v))out.push(v);
+  const score=v=>/google/i.test(v.name)?5:/premium|mejorad/i.test(v.name)?4:/enhanced/i.test(v.name)?3:/^(ava|samantha|allison|susan|zoe|paulina|m[oó]nica|marisol|ang[eé]lica)\b/i.test(v.name)?2:/novelty|bells|bad news|bahh|boing|bubbles|cellos|whisper|zarvox|trinoids|jester|organ|superstar|albert|fred|junior|ralph|kathy|wobble|good news/i.test(v.name)?-5:0;
+  return out.sort((a,b)=>score(b)-score(a))}
+function voiceFor(lang){const chosen=lang==='en'?S.voiceEn:S.voiceEs;
+  if(chosen){const v=voices.find(v=>v.name===chosen);if(v)return v}return voicesFor(lang)[0]||null}
+let speakToken=0,audioOK=false,noAudio=false,keep=[];
+function setCaption(parts){const c=document.getElementById('cap');if(!c)return;c.textContent=noAudio?parts.filter(p=>p[1]===T).map(p=>p[0]).join(' · '):''}
+function showNoAudio(){if(noAudio||audioOK)return;noAudio=true;
+  const bar=el('div',{id:'noaudio',style:'position:fixed;top:0;left:0;right:0;z-index:50;background:#fff3c4;padding:10px 14px;font-family:system-ui,sans-serif;font-size:15px;box-shadow:0 2px 6px #0002;text-align:left'},
+    el('b',null,I('🔇 No se escucha la voz. ','🔇 No sound. ')),I('1) Suba el volumen y quite el modo silencio 🔕. 2) Si usa la app de Claude, abra el enlace en Safari o Chrome. Mientras tanto, la palabra aparece escrita. ','1) Turn the volume up and switch off silent mode 🔕. 2) If you use the Claude app, open the link in Safari or Chrome. Meanwhile, the word is shown in writing. '),
+    el('button',{class:'btn',style:'font-size:15px;padding:6px 12px;margin-top:6px',onclick:()=>{noAudio=false;bar.remove();say([ES('Hola.'),EN('Hello!')])}},I('🔊 Probar otra vez','🔊 Try again')));
+  document.body.append(bar)}
+function say(parts,cb,rate){
+  const tok=++speakToken;setCaption(parts);
+  if(!('speechSynthesis' in window)){showNoAudio();setCaption(parts);cb&&cb();return}
+  let busy=false;try{busy=speechSynthesis.speaking||speechSynthesis.pending;speechSynthesis.cancel()}catch(e){}
+  parts=parts.flatMap(([t,l])=>String(t).length>140?String(t).split(/(?<=[.!?,;])\s+/).filter(Boolean).map(x=>[x,l]):[[t,l]]);
+  let i=0;
+  const next=()=>{if(tok!==speakToken)return;if(i>=parts.length){cb&&cb();return}
+    const [t,l]=parts[i++];const u=new SpeechSynthesisUtterance(t);keep.push(u);if(keep.length>20)keep.shift();
+    u.lang=l==='en'?'en-US':'es-US';const v=voiceFor(l);if(v)try{u.voice=v}catch(e){}
+    u.rate=rate||(l===T?S.rate:Math.min(1,S.rate+.1));u.pitch=1.1;u.volume=1;
+    let done=false,started=false;const fin=()=>{if(done)return;done=true;setTimeout(next,150)};
+    u.onstart=()=>{started=true;audioOK=true;const b=document.getElementById('noaudio');if(b){b.remove();noAudio=false;setCaption([])}};
+    u.onend=fin;u.onerror=fin;
+    setTimeout(()=>{if(!started&&!done&&!audioOK&&tok===speakToken){showNoAudio();setCaption(parts)}},2500);
+    setTimeout(fin,Math.max(3000,t.length*150));
+    try{speechSynthesis.resume()}catch(e){}
+    try{speechSynthesis.speak(u)}catch(e){fin()}};
+  if(busy)setTimeout(next,120);else next();
+}
+let actx=null;
+document.addEventListener('pointerdown',function unlock(){document.removeEventListener('pointerdown',unlock,true);try{const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}catch(e){}try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume&&actx.resume()}catch(e){}},true);
+function tone(freqs,dur){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t0=actx.currentTime;freqs.forEach((f,k)=>{const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t0+k*dur);g.gain.linearRampToValueAtTime(.18,t0+k*dur+.02);g.gain.exponentialRampToValueAtTime(.001,t0+k*dur+dur);o.connect(g);g.connect(actx.destination);o.start(t0+k*dur);o.stop(t0+k*dur+dur+.05)})}catch(e){}}
+const ding=()=>tone([660,880,1320],.13), bonk=()=>tone([300,240],.15);
+
+// ---------- Retroalimentación ----------
+const GOOD=[{es:'¡Muy bien!',en:'Great job!'},{es:'¡Excelente!',en:'Excellent!'},{es:'¡Lo lograste!',en:'You did it!'},{es:'¡Súper!',en:'Super!'},{es:'¡Qué inteligente!',en:'So smart!'},{es:'¡Fantástico!',en:'Fantastic!'}];
+const TRY={es:'¡Inténtalo otra vez!',en:'Try again!'};
+function pair(p){return p[N]+' '+p[T]}
+function showFb(kind,text){const f=$('#fb');f.className='fb show '+kind;f.textContent=text;clearTimeout(f._t);f._t=setTimeout(()=>f.className='fb',kind==='good'?1600:2000)}
+function confetti(n){const set=['⭐','🎉','🌟','💛','🎈','✨'];for(let i=0;i<n;i++){const c=el('div',{class:'confetti'},pick(set,Math.random));c.style.left=Math.random()*100+'vw';c.style.animationDelay=Math.random()*.8+'s';document.body.append(c);setTimeout(()=>c.remove(),3600)}}
+
+// ---------- Pantallas ----------
+const app=$('#app');
+let sessionStart=0,timerInt=null;
+function clear(){app.innerHTML='';clearInterval(timerInt)}
+function topBar(left,right){return el('div',{class:'top'},left||el('span'),right||el('span'))}
+function parentBtn(){return el('button',{class:'icon lock','aria-label':'Adultos',onclick:parentGate},'🔒')}
+function brand(){return el('div',{style:'font-size:34px;font-weight:bold;color:#5b6cff;letter-spacing:1px'},'Renata')}
+
+function chooser(){
+  clear();
+  const c=el('div',{class:'center'});
+  c.append(brand(),el('div',{class:'mascot'},'🦉'),el('h1',null,'¡Hola! · Hello!'));
+  const card=(flag,title,sub,m,parts)=>el('button',{class:'lesson','data-mode':m,style:'text-align:center;cursor:pointer',onclick:()=>{say(parts);setMode(m);home()}},
+    el('div',{style:'font-size:64px'},flag),el('div',{style:'font-size:28px;font-weight:bold'},title),el('div',{class:'sub'},sub));
+  c.append(card('🇺🇸','Aprendo inglés','Para niños que hablan español · instrucciones en español','en',[ES('¡Vamos a aprender inglés!'),EN("Let's learn English!")]),
+           card('🌎','I\'m learning Spanish','For children who speak English · instructions in English','es',[EN("Let's learn Spanish!"),ES('¡Vamos a aprender español!')]));
+  app.append(c);
+}
+
+function home(){
+  if(!MODE)return chooser();
+  clear();
+  const done=S.lastDone===todayStr()&&!S.unlock;const finished=S.day>=DAYS;
+  app.append(topBar(el('div',{class:'pill'},'⭐ '+S.stars),parentBtn()));
+  const c=el('div',{class:'center'});
+  c.append(brand(),el('div',{class:'chip'},MODE==='en'?'🇺🇸 Aprendo inglés':'🌎 Learning Spanish'),el('div',{class:'mascot'},'🦉'));
+  if(finished){c.append(el('h1',null,I('¡Completaste los 365 días!','You finished all 365 days!')),el('p',{class:'sub'},'🎓'))}
+  else if(done){
+    c.append(el('h1',null,I('¡Terminaste hoy! 🌙','All done today! 🌙')),el('p',{class:'sub'},I('Vuelve mañana para el día '+(S.day+1)+'.','Come back tomorrow for day '+(S.day+1)+'.')));
+    c.append(el('button',{class:'btn',onclick:album},I('📒 Mis stickers','📒 My stickers')));
+  }else{
+    c.append(el('h1',null,'¡Hola! Hello!'),el('p',{class:'sub'},I('Soy Lupita. Día '+(S.day+1)+' de '+DAYS,'I am Lupita. Day '+(S.day+1)+' of '+DAYS)));
+    c.append(el('button',{class:'big',onclick:()=>{say(T==='en'?[ES('¡Vamos a aprender inglés!'),EN("Let's learn English!")]:[EN("Let's learn Spanish!"),ES('¡Vamos a aprender español!')]);startDay()}},I('▶  ¡A jugar!','▶  Let\'s play!')));
+    c.append(el('button',{class:'btn',onclick:album},I('📒 Mis stickers','📒 My stickers')));
+  }
+  c.append(el('button',{class:'btn',style:'font-size:17px',onclick:()=>say([nt(I('Hola, soy Lupita.','Hi, I am Lupita.')),tg(T==='en'?'Hello! Cat. Dog. Apple.':'¡Hola! Gato. Perro. Manzana.')])},I('🔊 Probar sonido','🔊 Test sound')));
+  app.append(c);
+}
+function album(){
+  clear();
+  app.append(topBar(el('button',{class:'icon',onclick:home},'🏠'),el('div',{class:'pill'},'📒 '+S.stickers.length)));
+  const c=el('div',{class:'center'});c.append(el('h2',null,I('Mis stickers','My stickers')));
+  const a=el('div',{class:'album'});
+  S.stickers.forEach(s=>{const v=VOCAB.find(x=>x.e===s);a.append(el('button',{style:'background:none;font-size:38px',onclick:()=>v&&say([tg(TW(v)),nt(NW(v))])},s))});
+  if(!S.stickers.length)c.append(el('p',{class:'sub'},I('Gana un sticker cada día.','Earn a sticker every day.')));
+  c.append(a);app.append(c);
+}
+
+// ---------- Mini‑lección ----------
+function EXPLAIN(type){
+  if(T==='en')return({
+    aAn:['Usamos “an” antes de palabras que empiezan con vocal: a, e, i, o, u. Usamos “a” con las demás.',[['an apple','🍎'],['a cat','🐱']]],
+    plural:['Para decir “muchos” en inglés, casi siempre agregamos una “s” al final.',[['one dog','🐶'],['two dogs','🐶🐶']]],
+    esteEstos:['“This is” es para una cosa. “These are” es para muchas cosas.',[['This is a star.','⭐'],['These are stars.','⭐⭐⭐']]],
+    heShe:['“He” es para un niño o un hombre. “She” es para una niña o una mujer.',[['He is a boy.','👦'],['She is a girl.','👧']]],
+    orden:['En inglés el color va ANTES de la cosa. En español va después: corazón rojo = red heart.',[['a red heart','❤️'],['a blue circle','🔵']]]})[type];
+  return({
+    aAn:['In Spanish, words are “boy words” or “girl words.” Boy words use “el” or “un.” Girl words use “la” or “una.”',[['el gato','🐱'],['la manzana','🍎']]],
+    plural:['To say more than one in Spanish, add “s” or “es” at the end: gato → gatos, flor → flores.',[['un perro','🐶'],['dos perros','🐶🐶']]],
+    esteEstos:['“Este / esta” means this (one thing). “Estos / estas” means these (many things).',[['Esta es una estrella.','⭐'],['Estas son estrellas.','⭐⭐⭐']]],
+    heShe:['“Él” means he (a boy or a man). “Ella” means she (a girl or a woman).',[['Él es un niño.','👦'],['Ella es una niña.','👧']]],
+    orden:['In Spanish the color goes AFTER the thing: red heart = corazón rojo.',[['un corazón rojo','❤️'],['un círculo azul','🔵']]]})[type];
+}
+function dayWords(list){const out=[];for(const x of list){let v=x.v||(x.c&&x.c.s?VOCAB.find(z=>z.en===x.c.s):null);if(v&&!out.includes(v))out.push(v)}return out.slice(0,4)}
+function wcard(e,t,n,v){const vs=v?variants(v):[];
+  return el('button',{class:'wcard',onclick:()=>say((n?[tg(t),nt(n)]:[tg(t)]).concat(T==='es'?vs.flatMap(([w,c])=>[nt(regNames(c)+':'),tg(w)]):[]))},el('div',{class:'e'},e),el('div',{class:'w'},t),n?el('div',{class:'s'},n):null,
+    vs.length?el('div',{class:'s',style:'font-size:13px;color:#22a06b'},'🌎 '+vs.map(([w,c])=>w+' ('+regNames(c)+')').join(' · ')):null)}
+function lesson(){
+  clear();
+  const list=PLAN[S.day];
+  app.append(topBar(el('button',{class:'icon',onclick:home},'🏠'),el('div',{class:'pill'},I('Día ','Day ')+(S.day+1))));
+  const c=el('div',{class:'center'});
+  c.append(el('h2',null,I('📘 Aprende hoy','📘 Learn today')));
+  const L=el('div',{class:'lesson'});
+  const letterEx=list.find(x=>x.l);const letter=letterEx?letterEx.l:LORDER[S.day%LORDER.length];
+  const lw=VOCAB.filter(v=>first(TW(v))===letter&&![2,3,13,14].includes(v.t)).slice(0,3);
+  L.append(el('h3',null,I('🔤 La letra del día: ','🔤 Letter of the day: ')+letter.toUpperCase()+' '+letter));
+  L.append(el('p',null,T==='en'?'Explicación: la letra '+letter.toUpperCase()+' en inglés se dice “'+letter.toUpperCase()+'”. Palabras que empiezan con '+letter+':':'In Spanish, the letter '+letter.toUpperCase()+' is called “'+LNAME_ES[letter]+'.” Words that start with '+letter+':'));
+  const cw=el('div',{class:'cards'});lw.forEach(v=>cw.append(wcard(v.e,sayWord(v),NW(v),v)));L.append(cw);
+  const words=dayWords(list).filter(v=>!lw.includes(v));
+  if(words.length){L.append(el('h3',{style:'margin-top:14px'},I('🧺 Palabras de hoy (toca para escuchar)','🧺 Today\'s words (tap to listen)')));const cw2=el('div',{class:'cards'});words.forEach(v=>cw2.append(wcard(v.e,sayWord(v),NW(v),v)));L.append(cw2)}
+  const g=list.find(x=>EXPLAIN(x.type));
+  if(g){const [t,exs]=EXPLAIN(g.type);L.append(el('h3',{style:'margin-top:14px'},I('🧩 Regla de hoy','🧩 Today\'s rule')),el('p',null,t));const ce=el('div',{class:'cards'});exs.forEach(([w,e])=>ce.append(wcard(e,w)));L.append(ce)}
+  const cu=list.find(x=>x.skill==='cultura');
+  if(cu)L.append(el('h3',{style:'margin-top:14px'},I('🇺🇸 Cultura','🇺🇸 Culture')),el('p',null,cu.c.e+' '+cFact(cu.c)));
+  c.append(L,el('button',{class:'big',onclick:()=>{S.idx=0;save();runExercise()}},I('¡Practicar! ▶','Practice! ▶')));
+  app.append(c);
+  const parts=[nt(I('La letra del día es la','The letter of the day is')),tg(letterSay(letter))];
+  lw.slice(0,2).forEach(v=>parts.push(tg(sayWord(v))));
+  if(g)parts.push(nt(EXPLAIN(g.type)[0]));
+  say(parts);
+}
+function startDay(){if(S.unlock&&S.lastDone===todayStr()){S.unlock=false;save()}sessionStart=Date.now();if(S.idx>0)runExercise();else lesson()}
+
+// ---------- Motor de ejercicios ----------
+let cur=null;
+function runExercise(){
+  clear();
+  const list=PLAN[S.day];
+  if(S.idx>=list.length)return finishDay();
+  const ex=list[S.idx];cur={ex,tries:0,firstOk:true};
+  const dots=el('div',{class:'dots'});list.forEach((_,i)=>dots.append(el('span',{class:'dot'+(i<S.idx?' on':i===S.idx?' cur':'')})));
+  const tm=el('div',{class:'timer'});
+  const tick=()=>{const m=Math.floor((Date.now()-(sessionStart||Date.now()))/60000);tm.textContent='⏱ '+m+' / '+S.minutes+' min'};tick();timerInt=setInterval(tick,15000);
+  app.append(topBar(el('button',{class:'icon',onclick:home},'🏠'),el('div',{class:'row',style:'align-items:center'},dots)));
+  app.append(el('div',{class:'row',style:'justify-content:space-between;align-items:center'},el('span',{class:'chip'},SKILLICON[ex.skill]+' '+SKILLS[ex.skill]),tm));
+  const body=el('div',{class:'center'});app.append(body);
+  (RENDER[ex.type]||RENDER.oyeToca)(ex,body,rngFrom(hashStr(ex.key+'#d')));
+}
+function complete(){const sk=S.skills[cur.ex.skill]=S.skills[cur.ex.skill]||{c:0,t:0};sk.t++;if(cur.firstOk)sk.c++;S.stars++;S.idx++;save();setTimeout(runExercise,1500)}
+function praise(extra){const g=pick(GOOD,Math.random);ding();showFb('good','⭐ '+pair(g));say([nt(g[N]),tg(g[T])].concat(extra||[]))}
+function lookHere(extra){bonk();showFb('look',I('👀 Mira, es esta.','👀 Look, it\'s this one.'));say([nt(I('Mira, es esta.','Look, it\'s this one.'))].concat(extra||[]))}
+function promptRow(parts,hintText){
+  const row=el('div',{class:'prompt'});
+  row.append(el('button',{class:'hear','aria-label':'Escuchar',onclick:()=>say(parts)},'🔊'));
+  if(hintText)row.append(el('button',{class:'hint','aria-label':'Pista',onclick:()=>say([nt(hintText)])},'💡'));
+  setTimeout(()=>say(parts),250);
+  return el('div',{style:'display:flex;flex-direction:column;align-items:center;gap:6px'},row,el('div',{id:'cap',class:'sub',style:'font-size:22px;color:#5b6cff'}));
+}
+function choices(body,items,onOk,opts){
+  opts=opts||{};
+  const box=el('div',{class:'opts'});
+  const btns=items.map(it=>{const b=el('button',{class:'opt '+(it.cls||''),'data-ok':it.ok?'1':'0'});if(it.node)b.append(it.node);else b.textContent=it.text;box.append(b);return b});
+  let locked=false;
+  btns.forEach((b,i)=>b.addEventListener('click',()=>{
+    if(locked)return;
+    if(opts.audio&&!b.classList.contains('sel')){btns.forEach(x=>x.classList.remove('sel'));b.classList.add('sel');opts.audio(items[i]);return}
+    if(items[i].ok){locked=true;b.classList.add('ok');btns.forEach(x=>x!==b&&x.classList.add('dim'));praise(onOk&&onOk());complete()}
+    else{if(items[i].w)setTimeout(()=>say([tg(items[i].w),nt(I('¡Busca otra vez!','Look again!'))]),50);cur.tries++;b.classList.add('no');setTimeout(()=>b.classList.remove('no'),450);b.classList.remove('sel');
+      if(cur.tries>=2){locked=true;const k=items.findIndex(x=>x.ok);btns[k].classList.add('ok');btns.forEach(x=>x!==btns[k]&&x.classList.add('dim'));lookHere(onOk&&onOk());complete()}
+      else{cur.firstOk=false;bonk();showFb('try',I('Casi… ','Almost… ')+pair(TRY));if(!items[i].w)say([nt(TRY[N]),tg(TRY[T])])}}
+  }));
+  if(opts.audio)body.append(el('p',{class:'sub'},I('Toca una vez para escuchar. Toca otra vez para elegir.','Tap once to listen. Tap again to choose.')));
+  body.append(box);return box;
+}
+function others(v,n,r,filter){const pool=VOCAB.filter(x=>x.e!==v.e&&x.en!==v.en&&(!filter||filter(x)));return shuffle(pool,r).slice(0,n)}
+function group(e,n){const g=el('span',{class:'group'});for(let i=0;i<n;i++)g.append(e);return g}
+function letterOpts(right,r,upper){const ds=shuffle(LETTERS.filter(x=>x!==right),r).slice(0,2);return shuffle([{text:upper?right.toUpperCase():right,ok:1,cls:'txt'},...ds.map(d=>({text:upper?d.toUpperCase():d,cls:'txt'}))],r)}
+const H=(es,en)=>I(es,en); // texto de pista
+const LISTEN=()=>nt(I('Escucha y toca.','Listen and tap.'));
+
+const RENDER={
+  oyeMay(ex,b,r){b.append(el('h2',null,I('Escucha y toca la letra','Listen and tap the letter')),promptRow([nt(I('Escucha y toca la letra.','Listen and tap the letter.')),tg(theLetter(ex.l))],H('Escucha el nombre de la letra y busca su forma.','Listen to the name of the letter and find it.')));
+    choices(b,letterOpts(ex.l,r,true),()=>[tg(letterSay(ex.l))])},
+  oyeMin(ex,b,r){b.append(el('h2',null,I('Toca la letra minúscula','Tap the lowercase letter')),promptRow([nt(I('Toca la letra minúscula.','Tap the lowercase letter.')),tg(T==='en'?'Little '+ex.l.toUpperCase()+'.':'La '+LNAME_ES[ex.l]+' minúscula.')],H('La minúscula es la letra pequeña.','Lowercase is the small letter.')));
+    choices(b,letterOpts(ex.l,r,false),()=>[tg(letterSay(ex.l))])},
+  mayMin(ex,b,r){b.append(el('div',{class:'word'},ex.l.toUpperCase()),promptRow([nt(I('Busca la minúscula de la','Find the lowercase of')),tg(letterSay(ex.l))],H('Cada mayúscula tiene una minúscula, como A y a.','Every capital letter has a lowercase letter, like A and a.')));
+    choices(b,letterOpts(ex.l,r,false),()=>[tg(letterSay(ex.l))])},
+  minMay(ex,b,r){b.append(el('div',{class:'word'},ex.l),promptRow([nt(I('Busca la mayúscula de la','Find the capital of')),tg(letterSay(ex.l))],H('La mayúscula es la letra grande.','The capital is the big letter.')));
+    choices(b,letterOpts(ex.l,r,true),()=>[tg(letterSay(ex.l))])},
+  sigue(ex,b,r){const i=LETTERS.indexOf(ex.l);const a=LETTERS[i-1],n=LETTERS[i+1];
+    b.append(el('div',{class:'word'},a.toUpperCase()+' '+ex.l.toUpperCase()+' _'),promptRow([nt(I('¿Qué letra sigue?','What letter comes next?')),tg(letterSay(a)+', '+letterSay(ex.l)+'...')],H('Canta el abecedario y escucha qué letra va después.','Sing the alphabet and listen for the next letter.')));
+    const ds=shuffle(LETTERS.filter(x=>x!==n&&x!==ex.l),r).slice(0,2);choices(b,shuffle([{text:n.toUpperCase(),ok:1,cls:'txt'},...ds.map(d=>({text:d.toUpperCase(),cls:'txt'}))],r),()=>[tg(letterSay(a)+', '+letterSay(ex.l)+', '+letterSay(n))])},
+  empieza(ex,b,r){b.append(el('div',{class:'word'},ex.l.toUpperCase()+' '+ex.l),promptRow([nt(I('¿Cuál empieza con la letra','Which one starts with the letter')),tg(letterSay(ex.l)+'?')],H('Di el nombre de cada dibujo. ¿Cuál empieza con esa letra?','Say the name of each picture. Which one starts with that letter?')));
+    const ds=others(ex.v,2,r,x=>first(TW(x))!==ex.l&&![2,3,13,14].includes(x.t));
+    choices(b,shuffle([{text:ex.v.e,ok:1,w:TW(ex.v)},...ds.map(d=>({text:d.e,w:TW(d)}))],r),()=>[tg(letterSay(ex.l)+'. '+TW(ex.v))])},
+  oyeToca(ex,b,r){b.append(el('h2',null,I('Escucha y toca','Listen and tap')),promptRow([LISTEN(),tg(TW(ex.v))],H('Escucha la palabra y busca el dibujo.','Listen to the word and find the picture.')));
+    const ds=others(ex.v,2,r);choices(b,shuffle([{text:ex.v.e,ok:1,w:TW(ex.v)},...ds.map(d=>({text:d.e,w:TW(d)}))],r),()=>[tg(TW(ex.v))])},
+  comoSeDice(ex,b,r){b.append(el('div',{class:'visual'},ex.v.e),promptRow([nt(I('¿Cómo se dice '+NW(ex.v)+' en '+TNAME()+'?','How do you say '+NW(ex.v)+' in '+TNAME()+'?'))],H('Toca cada bocina para escuchar. Elige la palabra correcta.','Tap each speaker to listen. Choose the right word.')));
+    const ds=others(ex.v,2,r);const items=shuffle([{w:TW(ex.v),ok:1},...ds.map(d=>({w:TW(d)}))],r).map((it,k)=>({ok:it.ok,ww:it.w,text:'🔊 '+(k+1),cls:'small'}));
+    choices(b,items,()=>[tg(TW(ex.v))],{audio:it=>say([tg(it.ww)])})},
+  region(ex,b,r){const v=ex.v;const where=regNames(ex.c);
+    b.append(el('h2',null,'🌎 '+I('Palabras de otros países','Words from other countries')),promptRow([nt(I('En '+where+' dicen:','In '+where+', they say:')),tg(ex.w),nt(I('Toca el dibujo.','Tap the picture.'))],I('Muchos países hablan español. A veces usan palabras distintas para la misma cosa.','Many countries speak Spanish. Sometimes they use different words for the same thing.')));
+    const ds=others(v,2,r,x=>![2,3,13,14].includes(x.t));choices(b,shuffle([{text:v.e,ok:1,w:ex.w},...ds.map(d=>({text:d.e,w:TW(d)}))],r),()=>[tg(ex.w),nt(I('es lo mismo que','is the same as')),tg(sayWord(v))])},
+  siNo(ex,b,r){const yes=r()<.5;const shown=yes?ex.v:others(ex.v,1,r,x=>!x.f.includes('x'))[0];
+    b.append(el('div',{class:'visual'},shown.e),promptRow([nt(I('¿Sí o no?','Yes or no?')),tg(isQ(ex.v))],H('Si el dibujo es lo que dice, toca 👍. Si no, toca 👎.','If the picture matches, tap 👍. If not, tap 👎.')));
+    choices(b,[{text:'👍',ok:yes},{text:'👎',ok:!yes}],()=>[tg(yes?(T==='en'?'Yes!':'¡Sí!'):(T==='en'?'No! ':'¡No! ')+TW(shown))])},
+  contar(ex,b,r){const {c,n}=ex;const s=countSentence(c,n,false);
+    b.append(el('h2',null,I('Escucha y cuenta','Listen and count')),promptRow([LISTEN(),tg(s)],H('Escucha el número y cuenta los dibujos.','Listen to the number and count the pictures.')));
+    const nums=shuffle([1,2,3,4,5,6,7,8,9,10].filter(x=>x!==n&&Math.abs(x-n)<=3),r).slice(0,2);
+    choices(b,shuffle([{node:group(c.e,n),ok:1},...nums.map(m=>({node:group(c.e,m),w:countSentence(c,m,false)}))],r),()=>[tg(s)])},
+  colorForma(ex,b,r){const s=colorPhrase(ex.sh,ex.col);b.append(el('h2',null,I('Escucha y toca','Listen and tap')),promptRow([LISTEN(),tg(s)],H('Escucha el color y la forma.','Listen for the color and the shape.')));
+    const c2=shuffle(COLS.filter(x=>x!==ex.col),r)[0];const sh2=shuffle(Object.keys(SHAPES).filter(x=>x!==ex.sh),r)[0];
+    choices(b,shuffle([{text:shapeEmoji(ex.sh,ex.col),ok:1},{text:shapeEmoji(ex.sh,c2),w:colorPhrase(ex.sh,c2)},{text:shapeEmoji(sh2,ex.col),w:colorPhrase(sh2,ex.col)}],r),()=>[tg(s)])},
+  grande(ex,b,r){const s=bigSmall(ex.c,ex.big);b.append(el('h2',null,I('¿Grande o pequeño?','Big or small?')),promptRow([LISTEN(),tg(s)],T==='en'?'Big quiere decir grande. Small quiere decir pequeño.':'Grande means big. Pequeño means small.'));
+    choices(b,shuffle([{node:el('span',{style:'font-size:'+(ex.big?'110px':'40px')},ex.c.e),ok:1},{node:el('span',{style:'font-size:'+(ex.big?'40px':'110px')},ex.c.e),w:bigSmall(ex.c,!ex.big)}],r),()=>[tg(s)])},
+  aAn(ex,b,r){const v=ex.v;
+    if(T==='en'){const a=artEN(v);b.append(el('div',{class:'visual'},v.e),el('div',{class:'sentence'},'___ '+v.en),promptRow([nt('¿Qué va: a o an?'),tg(v.en)],EXPLAIN('aAn')[0]));
+      return choices(b,[{text:'a',ok:a==='a',cls:'txt'},{text:'an',ok:a==='an',cls:'txt'}],()=>[tg(a+' '+v.en)])}
+    const g=gES(v),def=ex.def;const right=def?defES(v):indES(v);const optsA=def?['el','la']:['un','una'];
+    b.append(el('div',{class:'visual'},v.e),el('div',{class:'sentence'},'___ '+v.es),promptRow([nt(def?'El or la?':'Un or una?'),tg(v.es)],EXPLAIN('aAn')[0]));
+    choices(b,optsA.map(o=>({text:o,ok:o===right,cls:'txt'})),()=>[tg(right+' '+v.es)])},
+  plural(ex,b,r){const w=ex.pl?cP(ex.c):cS(ex.c);b.append(el('h2',null,I('¿Uno o muchos?','One or many?')),promptRow([LISTEN(),tg(w)],EXPLAIN('plural')[0]));
+    const m=2+Math.floor(r()*3);choices(b,shuffle([{node:group(ex.c.e,ex.pl?m:1),ok:1},{node:group(ex.c.e,ex.pl?1:m),w:ex.pl?cS(ex.c):cP(ex.c)}],r),()=>[tg(w)])},
+  esteEstos(ex,b,r){const s=thisThese(ex.c,ex.pl);b.append(el('h2',null,T==='en'?'This is / These are':'Este es / Estos son'),promptRow([LISTEN(),tg(s)],EXPLAIN('esteEstos')[0]));
+    const m=3+Math.floor(r()*2);choices(b,shuffle([{node:group(ex.c.e,ex.pl?m:1),ok:1},{node:group(ex.c.e,ex.pl?1:m),w:thisThese(ex.c,!ex.pl)}],r),()=>[tg(s)])},
+  heShe(ex,b,r){const p=ex.p;const pr=personPron(p),rest=personRest(p);const opts=T==='en'?['He','She']:['Él','Ella'];
+    b.append(el('div',{class:'visual'},p[0]),el('div',{class:'sentence'},'___ '+rest),promptRow([nt(T==='en'?'¿He o she?':'Él or ella?'),tg('... '+rest)],EXPLAIN('heShe')[0]));
+    choices(b,opts.map(o=>({text:o,ok:o===pr,cls:'txt'})),()=>[tg(pr+' '+rest)])},
+  orden(ex,b,r){const good=colorPhrase(ex.sh,ex.col),bad=colorWrong(ex.sh,ex.col);b.append(el('div',{class:'visual'},shapeEmoji(ex.sh,ex.col)),promptRow([nt(I('¿Cuál está bien dicho en inglés? Toca para escuchar.','Which one is correct in Spanish? Tap to listen.'))],EXPLAIN('orden')[0]));
+    const items=shuffle([{w:good,ok:1},{w:bad}],r).map(it=>({ok:it.ok,ww:it.w,text:it.w,cls:'small'}));choices(b,items,()=>[tg(good)],{audio:it=>say([tg(it.ww)])})},
+  leePalabra(ex,b,r){b.append(el('div',{class:'word'},TW(ex.v)),promptRow([nt(I('Lee la palabra y toca el dibujo.','Read the word and tap the picture.'))],I('Mira las letras. Si necesitas ayuda, la palabra es: ','Look at the letters. If you need help, the word is: ')+NW(ex.v)+'.'));
+    const ds=others(ex.v,2,r,x=>x.t!==14);choices(b,shuffle([{text:ex.v.e,ok:1,w:TW(ex.v)},...ds.map(d=>({text:d.e,w:TW(d)}))],r),()=>[tg(TW(ex.v))])},
+  leeOracion(ex,b,r){const {c,n}=ex;const s=countSentence(c,n,true);b.append(el('div',{class:'sentence'},s),promptRow([nt(I('Lee la oración y toca el dibujo.','Read the sentence and tap the picture.'))],H('Mira el número y la palabra.','Look at the number and the word.')));
+    const nums=shuffle([1,2,3,4,5,6].filter(x=>x!==n),r).slice(0,2);choices(b,shuffle([{node:group(c.e,n),ok:1},...nums.map(m=>({node:group(c.e,m),w:countSentence(c,m,true)}))],r),()=>[tg(s)])},
+  leeColor(ex,b,r){const s=colorPhrase(ex.sh,ex.col);b.append(el('div',{class:'sentence'},s),promptRow([nt(I('Lee y toca.','Read and tap.'))],T==='en'?'Primero va el color: '+ex.col+' es '+COLES[ex.col]+'.':'The color comes after the shape: '+COLES[ex.col]+' means '+ex.col+'.'));
+    const cs=shuffle(COLS.filter(x=>x!==ex.col),r).slice(0,2);choices(b,shuffle([{text:shapeEmoji(ex.sh,ex.col),ok:1},...cs.map(x=>({text:shapeEmoji(ex.sh,x),w:colorPhrase(ex.sh,x)}))],r),()=>[tg(s)])},
+  trazaMay(ex,b,r){trace(b,ex.l.toUpperCase(),[nt(I('Traza la letra con tu dedo.','Trace the letter with your finger.')),tg(letterSay(ex.l))])},
+  trazaMin(ex,b,r){trace(b,ex.l,[nt(I('Traza la letra minúscula.','Trace the lowercase letter.')),tg(letterSay(ex.l))])},
+  trazaPalabra(ex,b,r){b.append(el('div',{style:'font-size:64px'},ex.v.e));trace(b,TW(ex.v),[nt(I('Traza la palabra.','Trace the word.')),tg(TW(ex.v))])},
+  fichas(ex,b,r){
+    const w=TW(ex.v);const chars=[...w];b.append(el('div',{class:'visual'},ex.v.e),promptRow([nt(I('Escribe la palabra con las letras.','Spell the word with the letters.')),tg(w)],H('Escucha cada sonido y toca las letras en orden.','Listen to each sound and tap the letters in order.')));
+    const slots=el('div',{class:'tiles'});const sl=chars.map(()=>el('div',{class:'slot'}));sl.forEach(s=>slots.append(s));b.append(slots);
+    const extra=shuffle(LETTERS.filter(x=>!w.includes(x)),r).slice(0,2);
+    const tiles=el('div',{class:'tiles'});let pos=0;
+    shuffle([...chars,...extra],r).forEach(ch=>{const t=el('button',{class:'tile','data-ch':ch},ch);t.onclick=()=>{
+      if(ch===chars[pos]){sl[pos].textContent=ch;sl[pos].classList.add('fill');t.style.visibility='hidden';pos++;tone([520+pos*60],.08);
+        if(pos===chars.length){praise([tg(w)]);complete()}}
+      else{cur.tries++;cur.firstOk=false;t.classList.add('opt','no');setTimeout(()=>t.classList.remove('opt','no'),450);bonk();
+        if(cur.tries>=3){sl[pos].style.borderColor='var(--pri)';say([nt(I('Busca la letra','Find the letter')),tg(letterSay(base(chars[pos])))])}}};tiles.append(t)});
+    b.append(tiles)},
+  primeraLetra(ex,b,r){const w=TW(ex.v);const l=first(w);b.append(el('div',{class:'visual'},ex.v.e),el('div',{class:'word'},'_'+w.slice(1)),promptRow([nt(I('¿Con qué letra empieza?','What letter does it start with?')),tg(w)],H('Escucha el primer sonido de la palabra.','Listen to the first sound of the word.')));
+    choices(b,letterOpts(l,r,false),()=>[tg(letterSay(l)+'. '+w)])},
+  repite(ex,b,r){const w=sayWord(ex.v);const alts=T==='es'?variants(ex.v).map(x=>x[0]):[];speak(b,ex.v.e,w,[nt(I('Escucha y repite en voz alta.','Listen and say it out loud.')),tg(w)],alts)},
+  frase(ex,b,r){const p=ex.p;speak(b,p.e,p[T],[nt(p[N]+' '+I('En inglés se dice:','In Spanish we say:')),tg(p[T])])},
+  meGusta(ex,b,r){const s=iLike(ex.c);speak(b,ex.c.e+ex.c.e,s,[nt(I('Repite: me gustan…','Say it: I like…')),tg(s)])},
+  dato(ex,b,r){const c=ex.c,w=cWord(c);b.append(el('div',{class:'lesson'},el('p',{style:'font-size:22px'},c.e+' '+cFact(c))),promptRow([nt(cFact(c)),nt(I('En inglés:','In Spanish:')),tg(w+'.'),nt(I('Ahora toca:','Now tap:')),tg(w)],I('Escucha el dato y busca el dibujo.','Listen to the fact and find the picture.')));
+    choices(b,shuffle([{text:c.e,ok:1},...c.d.slice(0,2).map(d=>({text:d}))],r),()=>[tg(w)])},
+  siNoV(ex,b,r){cultTF(ex,b,r,ex.c.e,true)},
+  siNoF(ex,b,r){cultTF(ex,b,r,ex.c.d[0],false)},
+  diloC(ex,b,r){const w=cWord(ex.c);speak(b,ex.c.e,w,[nt(cFact(ex.c)),nt(I('Repite en inglés:','Say it in Spanish:')),tg(w)])}
+};
+function cultTF(ex,b,r,shown,yes){const w=cWord(ex.c);b.append(el('div',{class:'visual'},shown),el('p',{class:'sub'},cFact(ex.c)),promptRow([nt(cFact(ex.c)),nt(I('¿Es esto?','Is this it?')),tg(cap(w)+(T==='en'?'? Yes or no?':'? ¿Sí o no?'))],I('Escucha la palabra y mira el dibujo.','Listen to the word and look at the picture.')));
+  choices(b,[{text:'👍',ok:yes},{text:'👎',ok:!yes}],()=>[tg(yes?cap(w)+'!':(T==='en'?'No!':'¡No!'))])}
+
+// ---------- Reconocimiento de voz ----------
+let DICT=null;
+try{if(window.claude&&claude.use)claude.use('dictation').then(d=>{DICT=d}).catch(()=>{})}catch(e){}
+const BrowserSR=window.SpeechRecognition||window.webkitSpeechRecognition||null;
+let srBlocked=false;
+function inFrame(){try{return window.self!==window.top}catch(e){return true}}
+function recAvailable(){return S.voiceRec!==false&&(!!DICT||(!!BrowserSR&&!srBlocked&&!inFrame()))}
+const HOMO=[['two','to','too','2'],['four','for','4'],['eight','ate','8'],['one','won','1'],['eye','i','aye'],['bee','be','b'],['pear','pair'],['ant','aunt'],['three','3','tree'],['five','5'],['six','6'],['seven','7'],['nine','9'],['ten','10'],['hi','high'],['night','knight'],['hello','hallo','hullo'],['tv','t.v'],['yoyo','yo yo','yo-yo'],
+  ['uno','1','un','una'],['dos','2'],['tres','3'],['cuatro','4'],['cinco','5'],['seis','6'],['siete','7'],['ocho','8'],['nueve','9'],['diez','10'],['el','él'],['si','sí'],['hola','ola']];
+function canon(w){for(const g of HOMO)if(g.includes(w))return g[0];return w.replace(/(es|s)$/,'')}
+function norm(t){return base((t||'').toLowerCase()).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’']/g,"'").replace(/[^a-z0-9ñ' -]/g,' ').replace(/-/g,' ').split(/\s+/).filter(Boolean)}
+function lev(a,b){const m=a.length,n=b.length;const d=Array.from({length:m+1},(_,i)=>[i]);for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
+function close(a,b){a=canon(a);b=canon(b);if(a===b)return true;const L=Math.max(a.length,b.length);return L>=4&&1-lev(a,b)/L>=.7}
+const STOP=['a','an','the','el','la','los','las','un','una','unos','unas'];
+function matchSpeech(target,heardList){
+  const all=norm(target);const tw=all.length>1?all.filter(w=>!STOP.includes(w)):all;let best=0;
+  for(const h of heardList||[]){const hw=norm(h);if(!hw.length)continue;const joined=hw.join('');let hit=0;
+    for(const w of tw){if(hw.some(x=>close(x,w))||joined.includes(w))hit++}best=Math.max(best,tw.length?hit/tw.length:0)}
+  return best}
+function listenOnce(onPartial,done){
+  try{speechSynthesis.cancel()}catch(e){}speakToken++;
+  if(DICT){
+    let txt='',ended=false,tm=null;const un=[];
+    const guard=setTimeout(()=>{try{DICT.stop()}catch(e){}finish(txt?[txt]:null,txt?null:'upstream_error')},12000);
+    const finish=(list,err)=>{if(ended)return;ended=true;clearTimeout(tm);clearTimeout(guard);un.forEach(f=>{try{f()}catch(e){}});done(list,err)};
+    const stopSoon=ms=>{clearTimeout(tm);tm=setTimeout(()=>{DICT.stop().then(()=>finish([txt])).catch(()=>finish([txt]))},ms)};
+    un.push(DICT.onPartial(e=>{onPartial&&onPartial(e.text)}));
+    un.push(DICT.onFinal(e=>{txt+=e.text;onPartial&&onPartial(txt);stopSoon(700)}));
+    un.push(DICT.onState(e=>{if(e.state==='idle'&&e.reason&&e.reason!=='stopped')finish(txt?[txt]:null,e.reason)}));
+    DICT.start({language:T}).then(()=>stopSoon(5500)).catch(err=>finish(null,(err&&err.code)||'upstream_error'));
+    return;
+  }
+  if(BrowserSR){
+    let r;try{r=new BrowserSR()}catch(e){done(null,'unavailable');return}
+    r.lang=T==='en'?'en-US':'es-US';r.interimResults=true;r.maxAlternatives=5;r.continuous=false;
+    let got=null,ended=false,started=false;const fin=(l,e)=>{if(ended)return;ended=true;clearTimeout(guard);done(l,e)};
+    r.onstart=()=>{started=true};
+    const guard=setTimeout(()=>{try{r.abort()}catch(e){}if(!started)srBlocked=true;fin(started?(got||[]):null,started?null:'unavailable')},8000);
+    r.onresult=ev=>{const res=ev.results[ev.results.length-1];const alts=[];for(let i=0;i<res.length;i++)alts.push(res[i].transcript);onPartial&&onPartial(alts[0]);if(res.isFinal)got=alts};
+    r.onerror=ev=>{if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){srBlocked=true;fin(null,'not_granted')}else if(ev.error==='no-speech')fin([],'no_speech');else fin(got,ev.error)};
+    r.onend=()=>fin(got||[],null);
+    try{r.start();setTimeout(()=>{try{r.stop()}catch(e){}},6000)}catch(e){fin(null,'unavailable')}
+    return;
+  }
+  done(null,'unavailable');
+}
+function speak(b,e,text,parts,alts){
+  b.append(el('button',{class:'visual',style:'background:none',onclick:()=>say([tg(text)])},e),el('div',{class:'sentence'},text),promptRow(parts,I('Escucha, toca el micrófono y dilo fuerte y claro. ¡Tú puedes!','Listen, tap the microphone and say it loud and clear. You can do it!')));
+  const turtle=el('button',{class:'btn',onclick:()=>say([tg(text)],null,.55)},I('🐢 Lento','🐢 Slow'));
+  const heard=el('p',{class:'sub',id:'heard',style:'min-height:28px'},'');
+  const selfBtn=el('button',{class:'btn green','data-ok':'1',onclick:()=>{selfBtn.disabled=true;praise([tg(text)]);complete()}},I('🗣️ ¡Lo dije!','🗣️ I said it!'));
+  if(!recAvailable()){b.append(el('div',{class:'row'},turtle,selfBtn));return}
+  let tries=0,busy=false,finished=false;
+  const micLabel=I('🎤 ¡Habla!','🎤 Speak!');
+  const mic=el('button',{class:'big','data-mic':'1',style:'background:#e5484d;box-shadow:0 6px 0 #a82e32'},micLabel);
+  selfBtn.style.display='none';
+  mic.onclick=()=>{
+    if(busy||finished)return;busy=true;mic.textContent=I('👂 Te escucho…','👂 Listening…');heard.textContent='';
+    listenOnce(t=>{heard.textContent=t?'🦉 '+I('Escucho','I hear')+': “'+t.trim()+'”':''},(list,err)=>{
+      busy=false;mic.textContent=micLabel;
+      if(list===null){if(err==='not_granted'||err==='unavailable'){srBlocked=true;if(err==='unavailable')DICT=null}
+        heard.textContent=I('No pude escuchar. Toca “¡Lo dije!” cuando lo digas.','I could not hear. Tap “I said it!” when you say it.');
+        if(err==='not_granted'||err==='unavailable')mic.style.display='none';selfBtn.style.display='';return}
+      const score=Math.max(matchSpeech(text,list),...(alts||[]).map(a=>matchSpeech(a,list)));const said=(list[0]||'').trim();
+      if(score>=.6){finished=true;mic.disabled=true;heard.textContent='🦉 '+I('Escuché','I heard')+': “'+said+'” ✅';confetti(12);praise([tg(text)]);complete();return}
+      tries++;cur.firstOk=false;cur.tries++;bonk();
+      if(!said){showFb('try',I('No te escuché. ¡Habla más fuerte!','I did not hear you. Speak louder!'));say([nt(I('No te escuché. Habla más fuerte y cerca.','I did not hear you. Speak louder and closer.')),tg(text)])}
+      else{showFb('try',I('Casi… Escucha y repite.','Almost… Listen and repeat.'));heard.textContent='🦉 '+I('Escuché','I heard')+': “'+said+'”';say([nt(I('Casi. Escucha otra vez:','Almost. Listen again:')),tg(text)],null,.7)}
+      if(tries>=2)selfBtn.style.display='';
+      if(tries>=3){finished=true;mic.disabled=true;showFb('good',I('🌟 ¡Buen esfuerzo!','🌟 Good try!'));say([nt(I('¡Buen esfuerzo! Seguimos practicando.','Good try! Let\'s keep practicing.')),tg(text)]);complete()}
+    });
+  };
+  b.append(el('div',{class:'row'},mic),heard,el('div',{class:'row'},turtle,selfBtn));
+}
+
+// ---------- Trazado ----------
+function trace(b,text,parts){
+  b.append(el('h2',null,I('Traza con tu dedo','Trace with your finger')),promptRow(parts,I('Pon tu dedo en la letra gris y síguela con cuidado.','Put your finger on the gray letter and follow it carefully.')));
+  const W=Math.min(app.clientWidth-28,700),Hh=text.length>2?Math.round(W*.42):Math.round(Math.min(W,520)*.62);
+  const cv=el('canvas',{class:'trace'});const dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=Hh*dpr;cv.style.width=W+'px';cv.style.height=Hh+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
+  const fs=Math.min(Hh*.72,(W*.92)/Math.max(1,text.length*.62));
+  const font='bold '+fs+'px "Arial Rounded MT Bold","Chalkboard SE","Comic Sans MS",Arial,sans-serif';
+  const mask=document.createElement('canvas');mask.width=W;mask.height=Hh;const m=mask.getContext('2d');
+  const drawGuide=()=>{ctx.clearRect(0,0,W,Hh);ctx.strokeStyle='#f1d7a6';ctx.lineWidth=2;ctx.setLineDash([8,8]);[Hh*.2,Hh*.5,Hh*.82].forEach(y=>{ctx.beginPath();ctx.moveTo(10,y);ctx.lineTo(W-10,y);ctx.stroke()});ctx.setLineDash([]);
+    ctx.font=font;ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.fillStyle='#e4e4ec';ctx.fillText(text,W/2,Hh*.82)};
+  drawGuide();
+  m.font=font;m.textAlign='center';m.textBaseline='alphabetic';m.fillStyle='#000';m.fillText(text,W/2,Hh*.82);
+  const md=m.getImageData(0,0,W,Hh).data;
+  const ink=document.createElement('canvas');ink.width=W;ink.height=Hh;const ik=ink.getContext('2d');
+  const lw=Math.max(14,fs*.13);
+  [ctx,ik].forEach(c=>{c.lineCap='round';c.lineJoin='round';c.lineWidth=lw});ctx.strokeStyle='#5b6cff';ik.strokeStyle='#000';
+  let drawing=false,last=null;
+  const P=ev=>{const rc=cv.getBoundingClientRect();return[(ev.clientX-rc.left)*(W/rc.width),(ev.clientY-rc.top)*(Hh/rc.height)]};
+  cv.addEventListener('pointerdown',ev=>{drawing=true;last=P(ev);cv.setPointerCapture&&cv.setPointerCapture(ev.pointerId);line(last,last)});
+  cv.addEventListener('pointermove',ev=>{if(!drawing)return;const p=P(ev);line(last,p);last=p});
+  ['pointerup','pointercancel','pointerleave'].forEach(t=>cv.addEventListener(t,()=>drawing=false));
+  function line(a,c){[ctx,ik].forEach(x=>{x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(c[0],c[1]);x.stroke()})}
+  b.append(cv);
+  let fails=0;
+  const check=()=>{const id=ik.getImageData(0,0,W,Hh).data;let lt=0,cov=0,ut=0,inside=0;const st=4,R=Math.round(lw*.6);
+    for(let y=0;y<Hh;y+=st)for(let x=0;x<W;x+=st){const i=(y*W+x)*4;const isL=md[i+3]>100,isU=id[i+3]>100;if(isL){lt++;if(isU)cov++}
+      if(isU){ut++;let near=isL;if(!near)for(let dy=-R;dy<=R&&!near;dy+=st)for(let dx=-R;dx<=R&&!near;dx+=st){const xx=x+dx,yy=y+dy;if(xx>=0&&yy>=0&&xx<W&&yy<Hh&&md[((yy*W+xx)*4)+3]>100)near=true}if(near)inside++}}
+    return{coverage:lt?cov/lt:0,precision:ut?inside/ut:0}};
+  window.__traceCheck=check;
+  const ok=el('button',{class:'btn green',onclick:()=>{const q=check();if(window.__forceTrace)q.coverage=q.precision=1;
+    if(q.coverage>=.45&&q.precision>=.65){ok.disabled=true;confetti(10);praise([tg(text)]);complete()}
+    else{fails++;cur.firstOk=false;if(fails>=2){ok.disabled=true;showFb('good',I('🌟 ¡Buen esfuerzo!','🌟 Good try!'));say([nt(I('¡Buen esfuerzo! Mañana lo harás aún mejor.','Good try! Tomorrow you will do even better.'))]);complete()}
+      else{bonk();showFb('try',I('Sigue la letra gris. ¡Otra vez!','Follow the gray letter. Again!'));say([nt(I('Sigue la letra gris despacito. ¡Otra vez!','Follow the gray letter slowly. Try again!'))]);drawGuide();ik.clearRect(0,0,W,Hh)}}}},I('✔ ¡Listo!','✔ Done!'));
+  const er=el('button',{class:'btn',onclick:()=>{drawGuide();ik.clearRect(0,0,W,Hh)}},I('🧽 Borrar','🧽 Erase'));
+  b.append(el('div',{class:'row'},er,ok));
+}
+
+function finishDay(){
+  clear();
+  const st=VOCAB[(S.day*37)%VOCAB.length].e;
+  if(!S.stickers.includes(st))S.stickers.push(st);
+  S.lastDone=todayStr();S.day++;S.idx=0;S.unlock=false;save();
+  const c=el('div',{class:'center'});
+  c.append(el('div',{class:'mascot'},'🦉'),el('h1',null,I('¡Terminaste el día ','You finished day ')+S.day+'!'),el('p',{class:'sub'},I('Ganaste un sticker nuevo:','You earned a new sticker:')),el('div',{class:'visual'},st));
+  c.append(el('button',{class:'big',onclick:home},I('🏠 Inicio','🏠 Home')));
+  app.append(c);confetti(40);tone([523,659,784,1046],.16);
+  say([nt(I('¡Terminaste! Ganaste un sticker nuevo.','You did it! You earned a new sticker.')),tg(T==='en'?'See you tomorrow!':'¡Hasta mañana!')]);
+}
+
+// ---------- Zona de adultos ----------
+function parentGate(){
+  const a=6+Math.floor(Math.random()*4),bb=6+Math.floor(Math.random()*4);let val='';
+  const out=el('div',{style:'font-size:32px;min-height:40px'},'');
+  const m=el('div',{class:'modal'});const box=el('div',null,el('h3',null,I('Solo para adultos','Grown-ups only')),el('p',null,I('Escribe el resultado de ','Type the answer to ')+a+' × '+bb),out);
+  const kp=el('div',{class:'keypad'});
+  [1,2,3,4,5,6,7,8,9,'⌫',0,'✔'].forEach(k=>kp.append(el('button',{onclick:()=>{
+    if(k==='⌫')val=val.slice(0,-1);else if(k==='✔'){m.remove();if(+val===a*bb)parentPanel();return}else if(val.length<3)val+=k;out.textContent=val}},String(k))));
+  box.append(kp,el('p',null,el('button',{class:'btn',onclick:()=>m.remove()},I('Cancelar','Cancel'))));m.append(box);document.body.append(m);
+}
+function parentPanel(){
+  clear();
+  app.append(topBar(el('button',{class:'icon',onclick:home},'🏠'),el('div',{class:'pill'},I('👩 Adultos','👩 Grown-ups'))));
+  const p=el('div',{class:'panel'});
+  const pct=Math.round(S.day/DAYS*100);
+  p.append(el('h3',null,I('Modo','Mode')),el('p',null,MODE==='en'?'🇺🇸 Aprendo inglés (instrucciones en español)':'🌎 Learning Spanish (instructions in English)'),
+    el('p',null,el('button',{class:'btn',onclick:()=>{MODE=null;try{localStorage.removeItem(MODEKEY)}catch(e){}chooser()}},I('🔁 Cambiar idioma · Change language','🔁 Change language · Cambiar idioma'))),
+    el('p',null,I('Cada idioma guarda su propio progreso.','Each language keeps its own progress.')));
+  p.append(el('h3',null,I('Progreso','Progress')),el('p',null,I('Día actual: ','Current day: ')+Math.min(S.day+1,DAYS)+' / '+DAYS+' · '+I('Días completados: ','Days completed: ')+S.day+' · ⭐ '+S.stars),el('div',{class:'bar'},el('i',{style:'width:'+pct+'%'})));
+  const t=el('table',{class:'sk'});
+  for(const k of Object.keys(SKILLICON)){const s=S.skills[k]||{c:0,t:0};const a=s.t?Math.round(s.c/s.t*100):0;t.append(el('tr',null,el('td',null,SKILLICON[k]+' '+SKILLS[k]),el('td',null,s.t+' '+I('ejercicios','exercises')),el('td',null,s.t?a+I('% al primer intento','% on first try'):'—')))}
+  p.append(el('h3',null,I('Destrezas','Skills')),t);
+  const today=PLAN[Math.min(S.day,DAYS-1)];
+  const ul=el('ul');today.forEach(x=>ul.append(el('li',null,SKILLICON[x.skill]+' '+SKILLS[x.skill]+' — '+describe(x))));
+  p.append(el('h3',null,I('Plan del día ','Plan for day ')+(Math.min(S.day,DAYS-1)+1)),ul);
+  const rate=el('input',{type:'range',min:'0.5',max:'1.1',step:'0.05',value:String(S.rate)});rate.oninput=()=>{S.rate=+rate.value;save()};
+  const mkSel=(lang)=>{const sel=el('select',{style:'font-size:15px;max-width:100%'});const list=voicesFor(lang);
+    sel.append(el('option',{value:''},I('Automática','Automatic')+(list[0]?' ('+list[0].name+')':'')));
+    list.forEach(v=>{const o=el('option',{value:v.name},v.name+(/google/i.test(v.name)?' ⭐':''));if((lang==='en'?S.voiceEn:S.voiceEs)===v.name)o.selected=true;sel.append(o)});
+    sel.onchange=()=>{if(lang==='en')S.voiceEn=sel.value;else S.voiceEs=sel.value;save();say(lang==='en'?[EN('Hello! I am Lupita. Cat. Dog. Apple.')]:[ES('Hola, soy Lupita. Gato. Perro. Manzana.')])};return sel};
+  const hasGoogle=voices.some(v=>/google/i.test(v.name));
+  p.append(el('h3',null,I('🔊 Voz','🔊 Voice')),
+    el('p',null,hasGoogle?I('✅ Este dispositivo tiene voces de Google (⭐). La app las usa automáticamente.','✅ This device has Google voices (⭐). The app uses them automatically.')
+      :I('ℹ️ No hay voces de Google (en iPad/iPhone es normal). La app usa la mejor voz de Apple. Para una voz más natural: Ajustes › Accesibilidad › Contenido leído › Voces (English: Ava Premium; Español: Paulina o Mónica).','ℹ️ No Google voices here (normal on iPad/iPhone). The app uses the best Apple voice. For a more natural voice: Settings › Accessibility › Spoken Content › Voices (English: Ava Premium; Spanish: Paulina or Mónica).')),
+    el('p',null,I('Voz en inglés: ','English voice: '),mkSel('en')),el('p',null,I('Voz en español: ','Spanish voice: '),mkSel('es')),
+    el('p',null,I('Velocidad: ','Speed: '),rate),
+    el('p',null,el('button',{class:'btn',onclick:()=>{S.unlock=true;save();showFb('look',I('Día siguiente desbloqueado','Next day unlocked'))}},I('🔓 Desbloquear día siguiente','🔓 Unlock next day'))),
+    el('p',null,I('Meta diaria sugerida: 10 minutos (mini‑lección + 8 ejercicios).','Suggested daily goal: 10 minutes (mini-lesson + 8 exercises).')));
+  const vr=el('input',{type:'checkbox'});vr.checked=S.voiceRec!==false;vr.onchange=()=>{S.voiceRec=vr.checked;save()};
+  const vout=el('p',{style:'min-height:20px'},'');
+  const testPhrase=T==='en'?'Hello my friend':'Hola mi amigo';
+  const vtest=el('button',{class:'btn'},I('🎤 Probar micrófono','🎤 Test microphone'));
+  vtest.onclick=()=>{vout.textContent=I('Diga: “','Say: “')+testPhrase+'”…';listenOnce(t=>{vout.textContent=I('Escucho: ','I hear: ')+t},(l,err)=>{
+    if(l===null)vout.textContent=err==='not_granted'?I('❌ El micrófono no tiene permiso.','❌ The microphone is not allowed.'):I('❌ El reconocimiento de voz no está disponible aquí. La niña usará “¡Lo dije!”.','❌ Speech recognition is not available here. The child will use “I said it!”.');
+    else{const sc=matchSpeech(testPhrase,l);vout.textContent=(sc>=.6?I('✅ Funciona. ','✅ It works. '):I('⚠️ Escuché algo distinto. ','⚠️ I heard something different. '))+I('Escuché: “','I heard: “')+(l[0]||'').trim()+'”'}})};
+  p.append(el('h3',null,I('🎤 Reconocimiento de voz','🎤 Speech recognition')),el('p',null,el('label',null,vr,I(' Activar: la app escucha y revisa la pronunciación.',' On: the app listens and checks pronunciation.'))),
+    el('p',null,I('Pruébelo usted primero: la primera vez el sistema pide permiso. Dentro de claude.ai funciona en Chrome. En su propia página (GitHub Pages) funciona también en iPad con Safari (active Ajustes › General › Teclado › Dictado).','Try it yourself first: the first time, the system asks for permission. Inside claude.ai it works in Chrome. On its own page (GitHub Pages) it also works on iPad with Safari (turn on Settings › General › Keyboard › Dictation).')),
+    el('p',null,vtest),vout,
+    el('p',null,I('Privacidad: la app nunca guarda la voz; solo recibe el texto y lo descarta. El dictado de Claude (Anthropic) o el del navegador (Google/Apple) convierte el sonido en texto. Puede apagarlo aquí.','Privacy: the app never stores the voice; it only receives the text and discards it. Claude dictation (Anthropic) or the browser (Google/Apple) turns sound into text. You can turn it off here.')));
+  p.append(el('h3',null,I('Seguridad y privacidad','Safety and privacy')),el('ul',null,
+    el('li',null,I('Sin anuncios, sin cuentas, sin compras y sin enlaces externos.','No ads, no accounts, no purchases, no outside links.')),
+    el('li',null,I('No pide nombre, edad, foto ni ubicación. No usa la cámara.','It never asks for a name, age, photo or location. No camera.')),
+    el('li',null,I('El progreso se guarda solo en este dispositivo.','Progress is saved only on this device.')),
+    el('li',null,I('Recomendación: use Acceso Guiado (iPad/iPhone) o Fijar pantalla (Android).','Tip: use Guided Access (iPad/iPhone) or Screen pinning (Android).'))));
+  p.append(el('h3',null,I('Reiniciar','Reset')),el('p',null,el('button',{class:'btn',onclick:()=>{const mm=el('div',{class:'modal'},el('div',null,el('p',null,I('¿Borrar el progreso de este idioma y empezar en el día 1?','Erase progress for this language and start at day 1?')),el('button',{class:'btn',onclick:()=>mm.remove()},'No'),' ',el('button',{class:'btn green',onclick:()=>{try{localStorage.removeItem(storeKey())}catch(e){}load();PLAN=buildPlan(S.start);mm.remove();home()}},I('Sí, borrar','Yes, erase'))));document.body.append(mm)}},I('🗑️ Empezar de nuevo','🗑️ Start over'))));
+  app.append(el('div',{class:'center',style:'justify-content:flex-start'},p));
+}
+function describe(x){const v=x.v,c=x.c;switch(x.type){
+  case'oyeMay':case'oyeMin':case'mayMin':case'minMay':case'sigue':case'trazaMay':case'trazaMin':return x.l.toUpperCase()+' ('+x.type+')';
+  case'empieza':return x.l.toUpperCase()+': '+TW(v);
+  case'contar':case'leeOracion':return countSentence(c,x.n,true);case'grande':return bigSmall(c,x.big);
+  case'colorForma':case'orden':case'leeColor':return colorPhrase(x.sh,x.col);
+  case'plural':return x.pl?cP(c):cS(c);case'esteEstos':return thisThese(c,x.pl);case'heShe':return personPron(x.p)+' '+personRest(x.p);
+  case'region':return x.w+' ('+regNames(x.c)+') = '+sayWord(v);
+  case'frase':return x.p[T];case'meGusta':return iLike(c);
+  case'dato':case'siNoV':case'siNoF':case'diloC':return cWord(x.c)+' ('+x.type+')';
+  case'aAn':return (T==='en'?artEN(v):(x.def?defES(v):indES(v)))+' '+TW(v);
+  default:return v?TW(v)+' ('+x.type+')':x.type}}
+
+window.__app={buildPlan,buildPools,setMode,get S(){return S},get T(){return T},VOCAB,CULT,COUNT,gES};
+home();
+</script>
+</body>
+</html>
