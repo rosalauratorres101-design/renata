@@ -738,7 +738,7 @@ function home(){
   const done=S.lastDone===todayStr()&&!S.unlock;const finished=S.day>=DAYS;
   app.append(topBar(el('div',{class:'pill'},'⭐ '+S.stars),parentBtn()));
   const c=el('div',{class:'center'});
-  c.append(brand(),el('div',{class:'chip'},MODE==='en'?'🇺🇸 Aprendo inglés':'🌎 Learning Spanish'),el('div',{class:'mascot'},'🦉'));
+  c.append(brand(),el('button',{class:'chip','data-switch':'1',style:'border:none;cursor:pointer;font-size:17px;padding:8px 16px',onclick:()=>{MODE=null;try{localStorage.removeItem(MODEKEY)}catch(e){}chooser()}},(MODE==='en'?'🇺🇸 Aprendo inglés':'🌎 Learning Spanish')+'  ·  🔁 '+I('Cambiar idioma','Change language')),el('div',{class:'mascot'},'🦉'));
   if(finished){c.append(el('h1',null,I('¡Completaste los 365 días!','You finished all 365 days!')),el('p',{class:'sub'},'🎓'))}
   else if(done){
     c.append(el('h1',null,I('¡Terminaste hoy! 🌙','All done today! 🌙')),el('p',{class:'sub'},I('Vuelve mañana para el día '+(S.day+1)+'.','Come back tomorrow for day '+(S.day+1)+'.')));
